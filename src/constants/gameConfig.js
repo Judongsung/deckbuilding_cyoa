@@ -1,14 +1,6 @@
 // src/constants/gameConfig.js
 
-const NODE_TYPES = {
-    NORMAL: "normal",
-    ELITE: "elite",
-    BOSS: "boss",
-    SHOP: "shop",
-    REST: "rest",
-    TREASURE: "treasure",
-    UNKNOWN: "unknown"
-};
+
 
 export const GAME_CONFIG = {
     // 0. 다국어 설정
@@ -17,7 +9,7 @@ export const GAME_CONFIG = {
 
     // 에셋 경로 설정
     ASSETS: {
-        FALLBACK_CARD_IMAGE: '/images/cards/temp.webp'
+        FALLBACK_CARD_IMAGE: './images/cards/temp.webp'
     },
 
     // 1. 플레이어 초기 스탯
@@ -50,18 +42,26 @@ export const GAME_CONFIG = {
     },
 
     // 2. 노드 종류 (오타 방지용)
-    NODE_TYPES: NODE_TYPES,
+    NODE_TYPES: {
+        NORMAL: "normal",
+        ELITE: "elite",
+        BOSS: "boss",
+        SHOP: "shop",
+        REST: "rest",
+        TREASURE: "treasure",
+        UNKNOWN: "unknown"
+    },
 
     // 3. 지도 생성 설정
     MAP: {
         MAX_FLOORS: 16,
         NODES_PER_FLOOR: 5,
         NODE_WEIGHTS: {
-            [NODE_TYPES.NORMAL]: 45,
-            [NODE_TYPES.UNKNOWN]: 22,
-            [NODE_TYPES.ELITE]: 16,
-            [NODE_TYPES.REST]: 12,
-            [NODE_TYPES.SHOP]: 5
+            "normal": 45,
+            "unknown": 22,
+            "elite": 16,
+            "rest": 12,
+            "shop": 5
         }
     },
 
@@ -109,10 +109,10 @@ export const GAME_CONFIG = {
     
     // ⭐ [추가] 몬스터 패시브 키워드 사전
     ENEMY_KEYWORDS: {
-        SWARM: '다중',       // 플레이어의 '광역' 카드 효과 2배
-        BERSERK: '광폭화',     // 체력 50% 이하 시 성장 공격력 2배
-        WEAKEN: '위압',       // 조우 시 플레이어 기본 공격력 -5
-        VULNERABLE: '갑옷파기' // 조우 시 플레이어 기본 방어력 -5
+        SWARM: 'SWARM',           // 플레이어의 '광역' 카드 효과 2배
+        BERSERK: 'BERSERK',       // 체력 50% 이하 시 성장 공격력 2배
+        WEAKEN: 'WEAKEN',         // 조우 시 플레이어 기본 공격력 -5
+        VULNERABLE: 'VULNERABLE'  // 조우 시 플레이어 기본 방어력 -5
     },
 
     // 카드 티어

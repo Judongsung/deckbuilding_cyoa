@@ -15,6 +15,7 @@
 
     // 이미지 로드 실패 시 임시 이미지로 대체
     function handleImageError(e) {
+        e.target.onerror = null; // 무한 루프 방지: 대체 이미지도 없으면 멈춤
         e.target.src = GAME_CONFIG.ASSETS.FALLBACK_CARD_IMAGE;
     }
 </script>

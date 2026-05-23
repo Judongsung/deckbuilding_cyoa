@@ -22,7 +22,7 @@ export function generateBattleRewards(state, earnedGold) {
         }
     }
 
-    if (state.map.lastCompletedNode.type === NODE_TYPES.ELITE || state.map.lastCompletedNode.type === NODE_TYPES.BOSS) {
+    if (state.map.lastCompletedNode && (state.map.lastCompletedNode.type === NODE_TYPES.ELITE || state.map.lastCompletedNode.type === NODE_TYPES.BOSS)) {
         let availableRelics = state.relicLibrary.filter(r => !state.player.relics.some(pr => pr.id === r.id));
         if (availableRelics.length > 0) { 
             let randomRelic = availableRelics[Math.floor(Math.random() * availableRelics.length)]; 

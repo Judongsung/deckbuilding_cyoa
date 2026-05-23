@@ -49,7 +49,7 @@ export function setupEncounter(state, node) {
 
 export function executeBattle(state) {
     const { ACTIONS } = GAME_CONFIG;
-    if (!state.currentEnemy) return state;
+    if (!state.currentEnemy || !state.map.selectedNode) return state;
 
     let roundLogs = [];
     let p = { ...state.player };

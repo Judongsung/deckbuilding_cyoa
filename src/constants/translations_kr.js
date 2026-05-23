@@ -26,7 +26,11 @@ export const TRANSLATIONS = {
         "BLOODLUST": "혈기",
         "BRAWL": "격투",
         "GROWTH": "성장",
-        "ARMORED": "무장"
+        "ARMORED": "무장",
+        "SWARM": "다중",
+        "BERSERK": "광폭화",
+        "WEAKEN": "위압",
+        "VULNERABLE": "갑옷파기"
     },
 
     CARD_TIERS: {
