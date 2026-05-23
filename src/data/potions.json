@@ -1,0 +1,25 @@
+[
+    {
+        "id": "potion_strength",
+        "name": "힘의 포션",
+        "desc": "다음 전투 동안 공격력이 5 증가합니다.",
+        "action": "add_temp_stat",
+        "stat": "baseAttack",
+        "value": 5
+    },
+    {
+        "id": "potion_ironskin",
+        "name": "철피 포션",
+        "desc": "다음 전투 동안 방어력이 5 증가합니다.",
+        "action": "add_temp_stat",
+        "stat": "baseDefense",
+        "value": 5
+    },
+    {
+        "id": "potion_heal",
+        "name": "치유 포션",
+        "desc": "즉시 체력을 20 회복합니다.",
+        "action": "heal",
+        "value": 20
+    }
+]

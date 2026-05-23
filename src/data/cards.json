@@ -1,0 +1,193 @@
+[
+    {
+        "id": "card_strike_01",
+        "name": "기본 공격",
+        "tier": "basic",
+        "keywords": ["ATTACK"],
+        "base_stats": { "hp": 0, "attack": 5, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "upgraded_base_stats": { "hp": 0, "attack": 8, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "effects": []
+    },
+    {
+        "id": "card_defend_01",
+        "name": "기본 방어",
+        "tier": "basic",
+        "keywords": ["DEFENSE"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 5, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 8, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "effects": []
+    },
+    {
+        "id": "card_berserker_axe",
+        "name": "광전사의 쌍도끼",
+        "tier": "special",
+        "keywords": ["ATTACK", "BLOODLUST"],
+        "base_stats": { "hp": 0, "attack": 15, "attackCap": 0, "attackGrowth": 0, "defense": -5, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "upgraded_base_stats": { "hp": 0, "attack": 20, "attackCap": 0, "attackGrowth": 0, "defense": -5, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "hp_percent_less_than_or_equal", "value": 50 }, "action": "increase_stat", "stat_type": "attack", "value": 15 }
+        ],
+        "upgraded_effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "hp_percent_less_than_or_equal", "value": 50 }, "action": "increase_stat", "stat_type": "attack", "value": 25 }
+        ]
+    },
+    {
+        "id": "card_blood_frenzy",
+        "name": "피의 격노",
+        "tier": "rare",
+        "keywords": ["BLOODLUST"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -1 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "hp_percent_less_than_or_equal", "value": 50 }, "action": "multiply_stat", "stat_type": "attack", "multiplier": 1.5 }
+        ],
+        "upgraded_effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "hp_percent_less_than_or_equal", "value": 50 }, "action": "multiply_stat", "stat_type": "attack", "multiplier": 2.0 }
+        ]
+    },
+    {
+        "id": "card_undying_will",
+        "name": "불굴의 투지",
+        "tier": "special",
+        "keywords": ["DEFENSE", "BLOODLUST"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 5, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 10, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "hp_percent_less_than_or_equal", "value": 50 }, "action": "increase_stat", "stat_type": "defense", "value": 20 }
+        ],
+        "upgraded_effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "hp_percent_less_than_or_equal", "value": 50 }, "action": "increase_stat", "stat_type": "defense", "value": 30 }
+        ]
+    },
+    {
+        "id": "card_super_focus",
+        "name": "초집중",
+        "tier": "rare",
+        "keywords": ["BRAWL"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "deck_size_less_than_or_equal", "value": 10 }, "action": "increase_stat", "stat_type": "attack", "value": 15 },
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "deck_size_less_than_or_equal", "value": 10 }, "action": "increase_stat", "stat_type": "defense", "value": 15 }
+        ],
+        "upgraded_effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "deck_size_less_than_or_equal", "value": 10 }, "action": "increase_stat", "stat_type": "attack", "value": 25 },
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "deck_size_less_than_or_equal", "value": 10 }, "action": "increase_stat", "stat_type": "defense", "value": 25 }
+        ]
+    },
+    {
+        "id": "card_short_battle",
+        "name": "단기 결전",
+        "tier": "rare",
+        "keywords": ["ATTACK", "BRAWL"],
+        "base_stats": { "hp": 0, "attack": 10, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -2 },
+        "upgraded_base_stats": { "hp": 0, "attack": 15, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -1 },
+        "effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "deck_size_less_than_or_equal", "value": 8 }, "action": "multiply_stat", "stat_type": "attack", "multiplier": 2.0 }
+        ],
+        "upgraded_effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "deck_size_less_than_or_equal", "value": 10 }, "action": "multiply_stat", "stat_type": "attack", "multiplier": 2.5 }
+        ]
+    },
+    {
+        "id": "card_agile_movement",
+        "name": "날렵한 몸놀림",
+        "tier": "special",
+        "keywords": ["BRAWL", "GROWTH"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "deck_size_less_than_or_equal", "value": 12 }, "action": "increase_stat", "stat_type": "defenseGrowth", "value": 2 }
+        ],
+        "upgraded_effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "condition": { "type": "deck_size_less_than_or_equal", "value": 12 }, "action": "increase_stat", "stat_type": "defenseGrowth", "value": 4 }
+        ]
+    },
+    {
+        "id": "card_boiling_shout",
+        "name": "피끓는 함성",
+        "tier": "rare",
+        "keywords": ["GROWTH"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 2, "defense": 0, "defenseCap": 0, "defenseGrowth": 2, "deployment": -1 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 4, "defense": 0, "defenseCap": 0, "defenseGrowth": 4, "deployment": 0 },
+        "effects": []
+    },
+    {
+        "id": "card_endless_training",
+        "name": "끝없는 단련",
+        "tier": "special",
+        "keywords": ["ATTACK", "GROWTH"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 3, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -1 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 5, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -1 },
+        "effects": []
+    },
+    {
+        "id": "card_thorn_shield",
+        "name": "가시 돋친 방패",
+        "tier": "special",
+        "keywords": ["DEFENSE", "ARMORED", "GROWTH"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 8, "defenseCap": 0, "defenseGrowth": 1, "deployment": 0 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 12, "defenseCap": 0, "defenseGrowth": 2, "deployment": 0 },
+        "effects": []
+    },
+    {
+        "id": "card_shield_bash",
+        "name": "방패 밀치기",
+        "tier": "rare",
+        "keywords": ["ATTACK", "ARMORED"],
+        "base_stats": { "hp": 0, "attack": 5, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -1 },
+        "upgraded_base_stats": { "hp": 0, "attack": 8, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "action": "add_stat_based_on_other_stat", "stat_type": "attack", "source_stat": "defense", "multiplier": 0.5 }
+        ],
+        "upgraded_effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "action": "add_stat_based_on_other_stat", "stat_type": "attack", "source_stat": "defense", "multiplier": 1.0 }
+        ]
+    },
+    {
+        "id": "card_iron_stance",
+        "name": "철벽 태세",
+        "tier": "rare",
+        "keywords": ["DEFENSE", "ARMORED"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 10, "defenseCap": 0, "defenseGrowth": 0, "deployment": -2 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 15, "defenseCap": 0, "defenseGrowth": 0, "deployment": -1 },
+        "effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "action": "multiply_stat", "stat_type": "defense", "multiplier": 1.5 }
+        ],
+        "upgraded_effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "action": "multiply_stat", "stat_type": "defense", "multiplier": 2.0 }
+        ]
+    },
+    {
+        "id": "card_armor_crush",
+        "name": "중장갑 파쇄",
+        "tier": "rare",
+        "keywords": ["ATTACK", "ARMORED"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -3 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -2 },
+        "effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "action": "add_stat_based_on_other_stat", "stat_type": "attack", "source_stat": "defense", "multiplier": 1.0 }
+        ],
+        "upgraded_effects": [
+            { "trigger": "pre_battle", "target": "self_stats", "action": "add_stat_based_on_other_stat", "stat_type": "attack", "source_stat": "defense", "multiplier": 1.5 }
+        ]
+    },
+    {
+        "id": "card_battle_cry",
+        "name": "전투 함성",
+        "tier": "common",
+        "keywords": ["BRAWL"],
+        "base_stats": { "hp": 0, "attack": 10, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 2 },
+        "upgraded_base_stats": { "hp": 0, "attack": 15, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 3 },
+        "effects": []
+    },
+    {
+        "id": "card_steel_will",
+        "name": "강철의 의지",
+        "tier": "common",
+        "keywords": ["DEFENSE", "BRAWL"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 15, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 20, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "effects": []
+    }
+]

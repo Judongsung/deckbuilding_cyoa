@@ -1,0 +1,113 @@
+[
+    {
+        "id": "event_altar",
+        "title": "잊혀진 제단",
+        "desc": "기괴한 조각상이 있는 낡은 제단을 발견했습니다. 오래된 제단 위에는 누군가 남긴 핏자국이 말라붙어 있습니다...",
+        "choices": [
+            {
+                "text": "피를 바친다 (체력 15 감소, 무작위 유물 획득)",
+                "actions": [
+                    { "type": "lose_hp", "value": 15 },
+                    { "type": "get_relic" }
+                ]
+            },
+            {
+                "text": "불길한 기운을 느끼고 돌아간다",
+                "actions": [
+                    { "type": "leave" }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_beggar",
+        "title": "수상한 거지",
+        "desc": "두건을 푹 눌러쓴 거지가 길을 막아섭니다. '동전 좀 적선하시구려... 좋은 걸 줄지도 모르지 않소?'",
+        "choices": [
+            {
+                "text": "적선한다 (50 골드 감소, 무작위 유물 획득)",
+                "actions": [
+                    { "type": "lose_gold", "value": 50 },
+                    { "type": "get_relic" }
+                ]
+            },
+            {
+                "text": "무시하고 지나간다",
+                "actions": [
+                    { "type": "leave" }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_wagon",
+        "title": "버려진 짐마차",
+        "desc": "숲길 한가운데에 상단이 버리고 간 듯한 부서진 짐마차가 있습니다. 쓸만한 물건이 남아있을지 모릅니다.",
+        "choices": [
+            {
+                "text": "마차 안을 깊숙이 뒤진다 (체력 20 감소, 무작위 유물 획득)",
+                "actions": [
+                    { "type": "lose_hp", "value": 20 },
+                    { "type": "get_relic" }
+                ]
+            },
+            {
+                "text": "주머니에 굴러다니는 동전만 챙긴다 (골드 30 획득)",
+                "actions": [
+                    { "type": "get_gold", "value": 30 }
+                ]
+            },
+            {
+                "text": "그냥 지나간다",
+                "actions": [
+                    { "type": "leave" }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_mushroom",
+        "title": "수상한 버섯 군락",
+        "desc": "동굴 벽면에서 매혹적인 보랏빛을 내는 버섯들을 발견했습니다. 굉장히 먹음직스러워 보입니다.",
+        "choices": [
+            {
+                "text": "버섯을 베어 문다 (체력 30 회복)",
+                "actions": [
+                    { "type": "heal", "value": 30 }
+                ]
+            },
+            {
+                "text": "버섯을 캐서 상단에 판다 (골드 40 획득, 체력 10 감소)",
+                "actions": [
+                    { "type": "lose_hp", "value": 10 },
+                    { "type": "get_gold", "value": 40 }
+                ]
+            },
+            {
+                "text": "무시하고 지나간다",
+                "actions": [
+                    { "type": "leave" }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "event_checkpoint",
+        "title": "통행세 요구",
+        "desc": "중무장한 용병들이 길을 막고 서 있습니다. '이 구역을 지나가려면 통행세를 내야지.'",
+        "choices": [
+            {
+                "text": "순순히 돈을 낸다 (40 골드 감소)",
+                "actions": [
+                    { "type": "lose_gold", "value": 40 }
+                ]
+            },
+            {
+                "text": "무기를 빼들고 강행돌파한다 (체력 25 감소)",
+                "actions": [
+                    { "type": "lose_hp", "value": 25 }
+                ]
+            }
+        ]
+    }
+]

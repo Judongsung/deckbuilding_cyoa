@@ -1,0 +1,41 @@
+[
+    {
+        "id": "enemy_goblin_01",
+        "name": "고블린 무리",
+        "type": "normal",
+        "hp": 30,
+        "hpGrowth": 5,
+        "base_stats": {
+            "attack": 2,
+            "defense": 0
+        },
+        "attackGrowth": 1,
+        "keywords": ["SWARM", "WEAKEN"]
+    },
+    {
+        "id": "enemy_orc_01",
+        "name": "오크 광전사",
+        "type": "elite",
+        "hp": 60,
+        "hpGrowth": 15,
+        "base_stats": {
+            "attack": 8,
+            "defense": 5
+        },
+        "attackGrowth": 2,
+        "keywords": ["BERSERK", "VULNERABLE"]
+    },
+    {
+        "id": "boss_dragon_01",
+        "name": "화룡 (보스)",
+        "type": "boss",
+        "hp": 200,
+        "hpGrowth": 0,
+        "base_stats": {
+            "attack": 15,
+            "defense": 10
+        },
+        "attackGrowth": 3,
+        "keywords": ["BERSERK"]
+    }
+]

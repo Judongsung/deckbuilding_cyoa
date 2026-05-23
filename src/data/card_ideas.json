@@ -1,0 +1,160 @@
+[
+    {
+        "id": "card_berserker_axe",
+        "name": "광전사의 쌍도끼",
+        "tier": "uncommon",
+        "keywords": ["공격", "광분"],
+        "base_stats": { "hp": 0, "attack": 25, "attackCap": 0, "attackGrowth": 0, "defense": -10, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "upgraded_base_stats": { "hp": 0, "attack": 35, "attackCap": 0, "attackGrowth": 0, "defense": -10, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "effects": []
+    },
+    {
+        "id": "card_blood_festival",
+        "name": "피의 축제",
+        "tier": "rare",
+        "keywords": ["성장", "광분"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -1 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -1 },
+        "effects": [
+            {
+                "trigger": "pre_battle", "target": "self_stats",
+                "action": "increase_stat_by_keyword_count", "stat_type": "attackGrowth",
+                "target_keyword": "광분", "multiplier": 1
+            }
+        ],
+        "upgraded_effects": [
+            {
+                "trigger": "pre_battle", "target": "self_stats",
+                "action": "increase_stat_by_keyword_count", "stat_type": "attackGrowth",
+                "target_keyword": "광분", "multiplier": 2
+            }
+        ]
+    },
+    {
+        "id": "card_thorn_shield",
+        "name": "가시 돋친 강철 방패",
+        "tier": "uncommon",
+        "keywords": ["방어", "가시", "성장"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 5, "defenseCap": 10, "defenseGrowth": 1, "deployment": -1 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 5, "defenseCap": 15, "defenseGrowth": 2, "deployment": -1 },
+        "effects": []
+    },
+    {
+        "id": "card_impregnable_fortress",
+        "name": "난공불락의 요새",
+        "tier": "rare",
+        "keywords": ["방어", "전술"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -2 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -1 },
+        "effects": [
+            {
+                "trigger": "pre_battle", "target": "self_stats",
+                "action": "increase_stat_by_keyword_count", "stat_type": "defenseCap",
+                "target_keyword": "방어", "multiplier": 10
+            }
+        ],
+        "upgraded_effects": [
+            {
+                "trigger": "pre_battle", "target": "self_stats",
+                "action": "increase_stat_by_keyword_count", "stat_type": "defenseCap",
+                "target_keyword": "방어", "multiplier": 10
+            }
+        ]
+    },
+    {
+        "id": "card_mystic_rune",
+        "name": "신비한 룬 석판",
+        "tier": "common",
+        "keywords": ["마법"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 2 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 3 },
+        "effects": []
+    },
+    {
+        "id": "card_archmage_staff",
+        "name": "대마법사의 지팡이",
+        "tier": "epic",
+        "flavor": "내 마나를 감당할 수 있을까?",
+        "keywords": ["마법", "성장"],
+        "base_stats": { "hp": 0, "attack": 2, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "upgraded_base_stats": { "hp": 0, "attack": 2, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "effects": [
+            {
+                "trigger": "pre_battle", "target": "self_stats",
+                "action": "increase_stat_by_deployment", "stat_type": "attackCap",
+                "multiplier": 5
+            }
+        ],
+        "upgraded_effects": [
+            {
+                "trigger": "pre_battle", "target": "self_stats",
+                "action": "increase_stat_by_deployment", "stat_type": "attackCap",
+                "multiplier": 8
+            }
+        ]
+    },
+    {
+        "id": "card_super_focus",
+        "name": "초집중",
+        "tier": "uncommon",
+        "keywords": ["전술"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
+        "effects": [
+            {
+                "trigger": "pre_battle", "target": "self_stats",
+                "condition": { "type": "deck_size_less_than_or_equal", "value": 10 },
+                "action": "increase_stat", "stat_type": "attack", "value": 10
+            },
+            {
+                "trigger": "pre_battle", "target": "self_stats",
+                "condition": { "type": "deck_size_less_than_or_equal", "value": 10 },
+                "action": "increase_stat", "stat_type": "defense", "value": 10
+            }
+        ],
+        "upgraded_effects": [
+            {
+                "trigger": "pre_battle", "target": "self_stats",
+                "condition": { "type": "deck_size_less_than_or_equal", "value": 10 },
+                "action": "increase_stat", "stat_type": "attack", "value": 15
+            },
+            {
+                "trigger": "pre_battle", "target": "self_stats",
+                "condition": { "type": "deck_size_less_than_or_equal", "value": 10 },
+                "action": "increase_stat", "stat_type": "defense", "value": 15
+            }
+        ]
+    },
+    {
+        "id": "card_plague",
+        "name": "전염병",
+        "tier": "rare",
+        "keywords": ["독", "전술", "성장"],
+        "base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -2 },
+        "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -2 },
+        "effects": [
+            {
+                "trigger": "pre_battle", "target": "deck",
+                "condition": { "type": "has_keyword", "value": "공격" },
+                "action": "add_keyword", "value": "독"
+            },
+            {
+                "trigger": "pre_battle", "target": "self_stats",
+                "action": "increase_stat_by_keyword_count", "stat_type": "attackGrowth",
+                "target_keyword": "독", "multiplier": 2
+            }
+        ],
+        "upgraded_effects": [
+            {
+                "trigger": "pre_battle", "target": "deck",
+                "condition": { "type": "has_keyword", "value": "공격" },
+                "action": "add_keyword", "value": "독"
+            },
+            {
+                "trigger": "pre_battle", "target": "self_stats",
+                "action": "increase_stat_by_keyword_count", "stat_type": "attackGrowth",
+                "target_keyword": "독", "multiplier": 3
+            }
+        ]
+    }
+]
