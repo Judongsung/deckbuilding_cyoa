@@ -68,8 +68,13 @@ export function executeBattle(state) {
 
     let turn = 1;
     while (p.hp > 0 && e.hp > 0 && turn <= 100) {
-        let curAtk = p.baseAttack + (turn * p.attackGrowth);
-        let curDef = p.baseDefense + (turn * p.defenseGrowth);
+        let multiplier = 1;
+        if (p.deckSize > 0 && p.deployment > 0) {
+            multiplier = Math.round((p.deployment / p.deckSize) * 100) / 100;
+        }
+
+        let curAtk = Math.floor((p.baseAttack + (turn * p.attackGrowth)) * multiplier);
+        let curDef = Math.floor((p.baseDefense + (turn * p.defenseGrowth)) * multiplier);
         
         if (p.attackCap > 0 && curAtk > p.attackCap) curAtk = p.attackCap;
         if (p.defenseCap > 0 && curDef > p.defenseCap) curDef = p.defenseCap;
@@ -79,7 +84,7 @@ export function executeBattle(state) {
 
         roundLogs.push(t('LOGS', 'BATTLE_TURN_INFO', { 
             turn, 
-            multiplier: 1, 
+            multiplier, 
             curAtk, 
             curDef 
         }));
