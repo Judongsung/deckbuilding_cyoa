@@ -5,7 +5,7 @@
 카드를 수집해 덱을 구성하고, 시너지와 스탯 총합으로 자동 전투를 이겨내는 RPG입니다.  
 게임 구현보다 **확장 가능한 아키텍처 설계**와 **기술적 의사결정 과정**에 집중한 프로젝트입니다.
 
-🔗 **[플레이하기](#https://ikkuffu.neocities.org/deckbuilding/)** (배포 링크)
+🔗 **[플레이하기](https://ikkuffu.neocities.org/deckbuilding/)** (배포 링크)
 
 ---
 
