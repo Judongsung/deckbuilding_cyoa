@@ -13,26 +13,29 @@ import { usePotion } from '../systems/potionSystem.js';
 import { claimSpecificReward, skipAllRewards, claimReward, generateBattleRewards } from '../systems/rewardSystem.js';
 import { claimTreasure } from '../systems/treasureSystem.js';
 
+import type { GameState } from '../types/state.ts';
+
 // 1. 초기 상태 정의
-const initialState = {
+const initialState: GameState = {
     basePlayerParams: {
         hp: GAME_CONFIG.PLAYER.MAX_HP, 
         gold: GAME_CONFIG.PLAYER.INITIAL_GOLD,
-        baseAttack: GAME_CONFIG.PLAYER.BASE_ATTACK, 
+        attack: GAME_CONFIG.PLAYER.BASE_ATTACK, 
         attackCap: GAME_CONFIG.PLAYER.ATTACK_CAP, 
         attackGrowth: GAME_CONFIG.PLAYER.ATTACK_GROWTH,
-        baseDefense: GAME_CONFIG.PLAYER.BASE_DEFENSE, 
+        defense: GAME_CONFIG.PLAYER.BASE_DEFENSE, 
         defenseCap: GAME_CONFIG.PLAYER.DEFENSE_CAP, 
         defenseGrowth: GAME_CONFIG.PLAYER.DEFENSE_GROWTH, 
         deployment: GAME_CONFIG.PLAYER.DEPLOYMENT
     },
     player: {
         hp: GAME_CONFIG.PLAYER.MAX_HP, 
+        maxHp: GAME_CONFIG.PLAYER.MAX_HP,
         gold: GAME_CONFIG.PLAYER.INITIAL_GOLD,
-        baseAttack: GAME_CONFIG.PLAYER.BASE_ATTACK, 
+        attack: GAME_CONFIG.PLAYER.BASE_ATTACK, 
         attackCap: GAME_CONFIG.PLAYER.ATTACK_CAP, 
         attackGrowth: GAME_CONFIG.PLAYER.ATTACK_GROWTH,
-        baseDefense: GAME_CONFIG.PLAYER.BASE_DEFENSE, 
+        defense: GAME_CONFIG.PLAYER.BASE_DEFENSE, 
         defenseCap: GAME_CONFIG.PLAYER.DEFENSE_CAP, 
         defenseGrowth: GAME_CONFIG.PLAYER.DEFENSE_GROWTH, 
         deployment: GAME_CONFIG.PLAYER.DEPLOYMENT, 
@@ -43,7 +46,8 @@ const initialState = {
 
     activeBattleBuffs: [], // ⭐ 활성화된 임시 버프
     
-    enemy: { name: "", hp: 0, maxHp: 0, attack: 0, defense: 0 },
+    deck: [],
+    currentEnemy: null,
     map: { structure: [], currentFloor: 0, selectedNode: null, lastCompletedNode: null, history: [] },
     battleLogs: [],
     
@@ -96,7 +100,6 @@ function createGameEngine() {
                 player: state.player,
                 deck: state.deck,
                 activeBattleBuffs: state.activeBattleBuffs,
-                enemy: state.enemy,
                 map: state.map,
                 battleLogs: state.battleLogs,
                 isRewardScreenOpen: state.isRewardScreenOpen,
@@ -168,9 +171,9 @@ function createGameEngine() {
         continueFromBattle: () => update(state => {
             state.isBattlePopupOpen = false;
             if (state.player.hp <= 0) {
-                state.runStatus = GAME_CONFIG.RUN_STATUS.GAME_OVER;
+                state.runStatus = GAME_CONFIG.RUN_STATUS.GAMEOVER;
             } else {
-                let earnedGold = GAME_CONFIG.ECONOMY.REWARD_GOLD_NORMAL;
+                let earnedGold: number = GAME_CONFIG.ECONOMY.REWARD_GOLD_NORMAL;
                 if (state.map.lastCompletedNode) {
                     if (state.map.lastCompletedNode.type === GAME_CONFIG.NODE_TYPES.ELITE) {
                         earnedGold = GAME_CONFIG.ECONOMY.REWARD_GOLD_ELITE;

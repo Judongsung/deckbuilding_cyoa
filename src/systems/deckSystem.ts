@@ -8,8 +8,10 @@
 import { GAME_CONFIG } from '../constants/gameConfig.js';
 import { recalculatePlayerStats } from './statSystem.js';
 import { t } from '../utils/i18n.js';
+import type { GameState } from '../types/state.js';
+import type { Card } from '../types/models.js';
 
-export function addCardToDeck(state, card) {
+export function addCardToDeck(state: GameState, card: Card): GameState {
     if (state.runStatus !== GAME_CONFIG.RUN_STATUS.MAP_NAVIGATING && state.runStatus !== GAME_CONFIG.RUN_STATUS.IN_NODE_ACTION) return state; 
     
     let newCard = JSON.parse(JSON.stringify(card)); 
@@ -19,7 +21,7 @@ export function addCardToDeck(state, card) {
     return recalculatePlayerStats(state);
 }
 
-export function removeCardFromDeck(state, index) {
+export function removeCardFromDeck(state: GameState, index: number): GameState {
     if (state.runStatus !== GAME_CONFIG.RUN_STATUS.MAP_NAVIGATING && state.runStatus !== GAME_CONFIG.RUN_STATUS.IN_NODE_ACTION) return state; 
     
     state.deck.splice(index, 1); 

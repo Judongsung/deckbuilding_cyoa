@@ -1,12 +1,14 @@
-<script>
-    import { gameStore } from '../stores/gameStore.js';
-    import { t } from '../utils/i18n.js';
+<script lang="ts">
+    import { gameStore } from '../stores/gameStore.ts';
+    import { t } from '../utils/i18n.ts';
+    import { I18N_KEY } from '../constants/translation_keys.ts';
+    import { GAME_CONFIG } from '../constants/gameConfig.ts';
 </script>
 
 {#if $gameStore.isEventScreenOpen && $gameStore.currentEvent}
 <div class="event-overlay">
     <div class="event-modal">
-        <h2>{t('LOGS', 'EVENT_TITLE', { title: $gameStore.currentEvent.title })}</h2>
+        <h2>{t(I18N_KEY.LOGS.EVENT_TITLE, { title: $gameStore.currentEvent.title })}</h2>
         
         <div class="event-desc">
             <p>{$gameStore.currentEvent.desc}</p>
@@ -15,7 +17,7 @@
         <div class="choices-container">
             {#each $gameStore.currentEvent.choices as choice}
                 <button 
-                    class="choice-btn {choice.actions && choice.actions.some(a => a.type === 'leave') ? 'leave-btn' : 'action-btn'}"
+                    class="choice-btn {choice.actions && choice.actions.some(a => a.type === GAME_CONFIG.ACTIONS.LEAVE) ? 'leave-btn' : 'action-btn'}"
                     on:click={() => gameStore.executeEventChoice(choice)}
                 >
                     {choice.text}

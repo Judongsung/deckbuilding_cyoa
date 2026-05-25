@@ -1,7 +1,8 @@
-<script>
-    import { gameStore } from '../stores/gameStore.js';
-    import { GAME_CONFIG } from '../constants/gameConfig.js';
-    import { TRANSLATIONS, t } from '../utils/i18n.js';
+<script lang="ts">
+    import { gameStore } from '../stores/gameStore.ts';
+    import { GAME_CONFIG } from '../constants/gameConfig.ts';
+    import { TRANSLATIONS, t } from '../utils/i18n.ts';
+    import { I18N_KEY } from '../constants/translation_keys.ts';
 </script>
 
 <div class="right-panel">
@@ -9,17 +10,17 @@
         <div class="location-header">
             <h3>
             {#if $gameStore.map.selectedNode}
-                {t('UI', 'CURRENT_LOCATION', { floor: $gameStore.map.currentFloor, node: TRANSLATIONS.NODE_TYPES[$gameStore.map.selectedNode.type] || $gameStore.map.selectedNode.type })}
+                {t(I18N_KEY.UI.CURRENT_LOCATION, { floor: $gameStore.map.selectedNode.floor, node: TRANSLATIONS.NODE_TYPES[$gameStore.map.selectedNode.type] || $gameStore.map.selectedNode.type })}
             {:else}
-                {t('UI', 'CURRENT_LOCATION_WAITING', { floor: $gameStore.map.currentFloor })}
+                {t(I18N_KEY.UI.CURRENT_LOCATION_WAITING, { floor: $gameStore.map.currentFloor })}
             {/if}
             </h3>
         </div>
         
         {#if $gameStore.enemy && $gameStore.enemy.name && $gameStore.runStatus === GAME_CONFIG.RUN_STATUS.IN_NODE_ACTION}
         <div class="enemy-info">
-            <h4>{t('UI', 'ENEMY_INFO_NAME', { enemy: $gameStore.enemy.name })}</h4>
-            <p>{t('UI', 'ENEMY_INFO_STATS', { hp: $gameStore.enemy.hp, atk: $gameStore.enemy.attack, def: $gameStore.enemy.defense })}</p>
+            <h4>{t(I18N_KEY.UI.ENEMY_INFO_NAME, { enemy: $gameStore.enemy.name })}</h4>
+            <p>{t(I18N_KEY.UI.ENEMY_INFO_STATS, { hp: $gameStore.enemy.hp, atk: $gameStore.enemy.attack, def: $gameStore.enemy.defense })}</p>
         </div>
         {/if}
     </div>

@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
     import { createEventDispatcher } from 'svelte';
-    import { TRANSLATIONS } from '../utils/i18n.js';
+    import { TRANSLATIONS } from '../utils/i18n.ts';
     import StatsBoard from './StatsBoard.svelte';
     import DeckBoard from './DeckBoard.svelte';
 

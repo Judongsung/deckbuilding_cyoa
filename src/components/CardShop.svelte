@@ -1,7 +1,8 @@
-<script>
-    import { gameStore } from '../stores/gameStore.js';
-    import { GAME_CONFIG } from '../constants/gameConfig.js';
-    import { TRANSLATIONS, t } from '../utils/i18n.js';
+<script lang="ts">
+    import { gameStore } from '../stores/gameStore.ts';
+    import { GAME_CONFIG } from '../constants/gameConfig.ts';
+    import { TRANSLATIONS, t } from '../utils/i18n.ts';
+    import { I18N_KEY } from '../constants/translation_keys.ts';
     import CardItem from './CardItem.svelte';
 </script>
 
@@ -10,7 +11,7 @@
     <div class="shop-modal">
         <div class="shop-header">
             <h2>{TRANSLATIONS.UI.SHOP_TITLE}</h2>
-            <div class="gold-display">{t('UI', 'SHOP_GOLD', { gold: $gameStore.player.gold })}</div>
+            <div class="gold-display">{t(I18N_KEY.UI.SHOP_GOLD, { gold: $gameStore.player.gold })}</div>
         </div>
         
         <div class="shop-content">
@@ -23,7 +24,7 @@
                             <span class="item-name">🏺 {relic.name}</span>
                             <span class="item-desc">{relic.desc}</span>
                             <button class="buy-btn" on:click={() => gameStore.buyRelicFromShop(index)}>
-                                {t('UI', 'SHOP_BTN_BUY', { price: GAME_CONFIG.ECONOMY.RELIC_PRICE })}
+                                {t(I18N_KEY.UI.SHOP_BTN_BUY, { price: GAME_CONFIG.ECONOMY.RELIC_PRICE })}
                             </button>
                         </div>
                     {/each}
@@ -43,7 +44,7 @@
                             card={card}
                             showPrice={true}
                             {price}
-                            actionText={TRANSLATIONS.UI.BTN_SHOP_BUY}
+                            actionText={t(I18N_KEY.UI.BTN_SHOP_BUY)}
                             actionClass="buy-btn"
                             disabled={$gameStore.player.gold < price}
                             onAction={() => gameStore.buyCardFromShop(index)}
@@ -63,7 +64,7 @@
                             <span class="item-name">🧪 {potion.name}</span>
                             <span class="item-desc">{potion.desc}</span>
                             <button class="buy-btn" on:click={() => gameStore.buyPotionFromShop(index)}>
-                                {t('UI', 'SHOP_BTN_BUY', { price: GAME_CONFIG.ECONOMY.POTION_PRICE })}
+                                {t(I18N_KEY.UI.SHOP_BTN_BUY, { price: GAME_CONFIG.ECONOMY.POTION_PRICE })}
                             </button>
                         </div>
                     {/each}
@@ -76,7 +77,7 @@
                 <div class="deck-list">
                     {#each $gameStore.deck as card, index}
                         <button class="remove-card-btn" on:click={() => gameStore.removeCardInShop(index)}>
-                            {t('UI', 'SHOP_BTN_REMOVE', { cardName: card.name + (card.isUpgraded ? '+' : ''), price: GAME_CONFIG.ECONOMY.CARD_REMOVAL_COST })}
+                            {t(I18N_KEY.UI.SHOP_BTN_REMOVE, { cardName: card.name + (card.isUpgraded ? '+' : ''), price: GAME_CONFIG.ECONOMY.CARD_REMOVAL_COST })}
                         </button>
                     {/each}
                 </div>

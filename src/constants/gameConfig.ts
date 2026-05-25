@@ -1,6 +1,4 @@
-// src/constants/gameConfig.js
-
-
+// src/constants/gameConfig.ts
 
 export const GAME_CONFIG = {
     // 0. 다국어 설정
@@ -34,22 +32,22 @@ export const GAME_CONFIG = {
         POTION_PRICE: 50,
         POTION_DROP_RATE: 0.3, // 30% 확률로 포션 드랍
         CARD_PRICES: {
-            "basic": 10,
-            "common": 25,
-            "special": 50,
-            "rare": 75
+            BASIC: 10,
+            COMMON: 25,
+            SPECIAL: 50,
+            RARE: 75
         }
     },
 
     // 2. 노드 종류 (오타 방지용)
     NODE_TYPES: {
-        NORMAL: "normal",
-        ELITE: "elite",
-        BOSS: "boss",
-        SHOP: "shop",
-        REST: "rest",
-        TREASURE: "treasure",
-        UNKNOWN: "unknown"
+        NORMAL: "NORMAL",
+        ELITE: "ELITE",
+        BOSS: "BOSS",
+        SHOP: "SHOP",
+        REST: "REST",
+        TREASURE: "TREASURE",
+        UNKNOWN: "UNKNOWN"
     },
 
     // 3. 지도 생성 설정
@@ -57,11 +55,11 @@ export const GAME_CONFIG = {
         MAX_FLOORS: 16,
         NODES_PER_FLOOR: 5,
         NODE_WEIGHTS: {
-            "normal": 45,
-            "unknown": 22,
-            "elite": 16,
-            "rest": 12,
-            "shop": 5
+            NORMAL: 45,
+            UNKNOWN: 22,
+            ELITE: 16,
+            REST: 12,
+            SHOP: 5
         }
     },
 
@@ -87,24 +85,24 @@ export const GAME_CONFIG = {
 
     // ⭐ [추가] 유물/이벤트 등의 발동 타이밍 (구독명)
     TRIGGERS: {
-        PRE_BATTLE: 'pre_battle',
-        POST_BATTLE: 'post_battle',
-        PASSIVE: 'passive'
+        PRE_BATTLE: 'PRE_BATTLE',
+        POST_BATTLE: 'POST_BATTLE',
+        PASSIVE: 'PASSIVE'
     },
 
     // ⭐ [추가] 포션/유물/이벤트 등의 행동 유형
     ACTIONS: {
-        HEAL: 'heal',
-        ADD_GOLD: 'add_gold',
-        ADD_STAT: 'add_stat',
-        ADD_TEMP_STAT: 'add_temp_stat',
+        HEAL: 'HEAL',
+        ADD_GOLD: 'ADD_GOLD',
+        ADD_STAT: 'ADD_STAT',
+        ADD_TEMP_STAT: 'ADD_TEMP_STAT',
         
         // 이벤트 선택지용
-        LEAVE: 'leave',
-        GET_GOLD: 'get_gold',
-        LOSE_GOLD: 'lose_gold',
-        LOSE_HP: 'lose_hp',
-        GET_RELIC: 'get_relic'
+        LEAVE: 'LEAVE',
+        GET_GOLD: 'GET_GOLD',
+        LOSE_GOLD: 'LOSE_GOLD',
+        LOSE_HP: 'LOSE_HP',
+        GET_RELIC: 'GET_RELIC'
     },
     
     // ⭐ [추가] 몬스터 패시브 키워드 사전
@@ -117,10 +115,10 @@ export const GAME_CONFIG = {
 
     // 카드 티어
     CARD_TIERS: {
-        BASIC: 'basic',
-        COMMON: 'common',
-        SPECIAL: 'special',
-        RARE: 'rare'
+        BASIC: 'BASIC',
+        COMMON: 'COMMON',
+        SPECIAL: 'SPECIAL',
+        RARE: 'RARE'
     },
 
     KEYWORDS: {
@@ -134,32 +132,43 @@ export const GAME_CONFIG = {
 
     // ⭐ [추가] 전투 팝업 상태
     BATTLE_POPUP_STATE: {
-        PRE: 'pre',
-        POST: 'post'
+        PRE: 'PRE',
+        POST: 'POST'
     },
 
     // ⭐ [추가] 보상 종류
     REWARD_TYPES: {
-        GOLD: 'gold',
-        POTION: 'potion',
-        RELIC: 'relic',
-        CARD: 'card'
+        GOLD: 'GOLD',
+        POTION: 'POTION',
+        RELIC: 'RELIC',
+        CARD: 'CARD'
+    },
+
+    APP_SCREENS: {
+        MENU: 'MENU',
+        GAME: 'GAME'
     },
 
     // ⭐ [추가] 효과 발동 조건
     EFFECT_CONDITIONS: {
-        DECK_SIZE_LTE: 'deck_size_less_than_or_equal',
-        DECK_SIZE_GTE: 'deck_size_greater_than_or_equal',
-        HP_PERCENT_LTE: 'hp_percent_less_than_or_equal',
-        HAS_KEYWORD: 'has_keyword'
+        DECK_SIZE_LTE: 'DECK_SIZE_LESS_THAN_OR_EQUAL',
+        DECK_SIZE_GTE: 'DECK_SIZE_GREATER_THAN_OR_EQUAL',
+        HP_PERCENT_LTE: 'HP_PERCENT_LESS_THAN_OR_EQUAL',
+        HAS_KEYWORD: 'HAS_KEYWORD'
+    },
+
+    EFFECT_TARGETS: {
+        DECK: 'DECK',
+        SELF_STATS: 'SELF_STATS'
     },
 
     // ⭐ [추가] 효과 액션
     EFFECT_ACTIONS: {
-        ADD_KEYWORD: 'add_keyword',
-        INC_STAT_BY_KEYWORD: 'increase_stat_by_keyword_count',
-        INC_STAT: 'increase_stat',
-        MUL_STAT: 'multiply_stat',
-        ADD_STAT_BASED_ON_OTHER: 'add_stat_based_on_other_stat'
+        ADD_KEYWORD: 'ADD_KEYWORD',
+        INC_STAT_BY_KEYWORD: 'INCREASE_STAT_BY_KEYWORD_COUNT',
+        INC_STAT_BY_DEPLOYMENT: 'INCREASE_STAT_BY_DEPLOYMENT',
+        INC_STAT: 'INCREASE_STAT',
+        MUL_STAT: 'MULTIPLY_STAT',
+        ADD_STAT_BASED_ON_OTHER: 'ADD_STAT_BASED_ON_OTHER_STAT'
     }
-};
+} as const;

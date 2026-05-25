@@ -1,7 +1,7 @@
-<script>
-    import { gameStore } from '../stores/gameStore.js';
-    import { GAME_CONFIG } from '../constants/gameConfig.js';
-    import { TRANSLATIONS } from '../utils/i18n.js';
+<script lang="ts">
+    import { gameStore } from '../stores/gameStore.ts';
+    import { GAME_CONFIG } from '../constants/gameConfig.ts';
+    import { TRANSLATIONS } from '../utils/i18n.ts';
     import { createEventDispatcher } from 'svelte';
     
     const dispatch = createEventDispatcher();

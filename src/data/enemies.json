@@ -2,10 +2,10 @@
     {
         "id": "enemy_goblin_01",
         "name": "고블린 무리",
-        "type": "normal",
+        "type": "NORMAL",
         "hp": 30,
         "hpGrowth": 5,
-        "base_stats": {
+        "baseStats": {
             "attack": 2,
             "defense": 0
         },
@@ -15,10 +15,10 @@
     {
         "id": "enemy_orc_01",
         "name": "오크 광전사",
-        "type": "elite",
+        "type": "ELITE",
         "hp": 60,
         "hpGrowth": 15,
-        "base_stats": {
+        "baseStats": {
             "attack": 8,
             "defense": 5
         },
@@ -28,10 +28,10 @@
     {
         "id": "boss_dragon_01",
         "name": "화룡 (보스)",
-        "type": "boss",
+        "type": "BOSS",
         "hp": 200,
         "hpGrowth": 0,
-        "base_stats": {
+        "baseStats": {
             "attack": 15,
             "defense": 10
         },

@@ -1,23 +1,25 @@
-<script>
-    import { gameStore } from '../stores/gameStore.js';
-    import { TRANSLATIONS } from '../utils/i18n.js';
+<script lang="ts">
+    import { gameStore } from '../stores/gameStore.ts';
+    import { TRANSLATIONS, t } from '../utils/i18n.ts';
+    import { I18N_KEY } from '../constants/translation_keys.ts';
+    import { GAME_CONFIG } from '../constants/gameConfig.ts';
 </script>
 
 {#if $gameStore.isBattlePopupOpen}
     <div class="battle-overlay">
         <div class="battle-modal">
-            {#if $gameStore.battlePopupState === 'pre'}
+            {#if $gameStore.battlePopupState === GAME_CONFIG.BATTLE_POPUP_STATE.PRE}
                 <h2>{TRANSLATIONS.UI.ENEMY_INFO_NAME.replace('{enemy}', $gameStore.currentEnemy?.name)}</h2>
                 <div class="enemy-stats">
-                    <p>❤️ 체력: {$gameStore.currentEnemy?.hp} / {$gameStore.currentEnemy?.maxHp}</p>
-                    <p>⚔️ 공격력: {$gameStore.currentEnemy?.attack}</p>
-                    <p>🛡️ 방어력: {$gameStore.currentEnemy?.defense}</p>
+                    <p>{t(I18N_KEY.UI.BATTLE_ENEMY_HP, { hp: $gameStore.currentEnemy?.hp, maxHp: $gameStore.currentEnemy?.maxHp })}</p>
+                    <p>{t(I18N_KEY.UI.BATTLE_ENEMY_ATTACK, { attack: $gameStore.currentEnemy?.attack })}</p>
+                    <p>{t(I18N_KEY.UI.BATTLE_ENEMY_DEFENSE, { defense: $gameStore.currentEnemy?.defense })}</p>
                 </div>
                 <button class="action-btn" on:click={gameStore.startBattle}>
                     {TRANSLATIONS.UI.BTN_BATTLE_START}
                 </button>
-            {:else if $gameStore.battlePopupState === 'post'}
-                <h2>전투 결과</h2>
+            {:else if $gameStore.battlePopupState === GAME_CONFIG.BATTLE_POPUP_STATE.POST}
+                <h2>{TRANSLATIONS.UI.BATTLE_RESULT}</h2>
                 <div class="battle-logs">
                     {#each $gameStore.lastBattleLogs as log}
                         <p>{log}</p>

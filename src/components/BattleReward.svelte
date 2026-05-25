@@ -1,6 +1,8 @@
-<script>
-    import { gameStore } from '../stores/gameStore.js';
-    import { TRANSLATIONS, t } from '../utils/i18n.js';
+<script lang="ts">
+    import { gameStore } from '../stores/gameStore.ts';
+    import { TRANSLATIONS, t } from '../utils/i18n.ts';
+    import { I18N_KEY } from '../constants/translation_keys.ts';
+    import { GAME_CONFIG } from '../constants/gameConfig.ts';
     import CardItem from './CardItem.svelte';
 
     let showCardChoices = false; // true면 카드 3지선다 보여줌
@@ -8,7 +10,7 @@
     
     // pendingRewards 중에서 'card' 타입의 인덱스를 찾음
     $: {
-        const idx = $gameStore.pendingRewards.findIndex(r => r.type === 'card');
+        const idx = $gameStore.pendingRewards.findIndex(r => r.type === GAME_CONFIG.REWARD_TYPES.CARD);
         if (idx === -1) {
             showCardChoices = false;
         } else {
@@ -27,19 +29,19 @@
                 <!-- 보상 리스트 모드 -->
                 <div class="rewards-list">
                     {#each $gameStore.pendingRewards as reward, index}
-                        {#if reward.type === 'gold'}
+                        {#if reward.type === GAME_CONFIG.REWARD_TYPES.GOLD}
                             <button class="reward-btn" on:click={() => gameStore.claimSpecificReward(index)}>
-                                {t('UI', 'REWARD_GET_GOLD', { amount: reward.amount })}
+                                {t(I18N_KEY.UI.REWARD_GET_GOLD, { amount: reward.amount })}
                             </button>
-                        {:else if reward.type === 'potion'}
+                        {:else if reward.type === GAME_CONFIG.REWARD_TYPES.POTION}
                             <button class="reward-btn" on:click={() => gameStore.claimSpecificReward(index)}>
-                                {t('UI', 'REWARD_GET_POTION', { item: reward.item.name })}
+                                {t(I18N_KEY.UI.REWARD_GET_POTION, { item: reward.item.name })}
                             </button>
-                        {:else if reward.type === 'relic'}
+                        {:else if reward.type === GAME_CONFIG.REWARD_TYPES.RELIC}
                             <button class="reward-btn" on:click={() => gameStore.claimSpecificReward(index)}>
-                                {t('UI', 'REWARD_GET_RELIC', { item: reward.item.name })}
+                                {t(I18N_KEY.UI.REWARD_GET_RELIC, { item: reward.item.name })}
                             </button>
-                        {:else if reward.type === 'card'}
+                        {:else if reward.type === GAME_CONFIG.REWARD_TYPES.CARD}
                             <button class="reward-btn" on:click={() => showCardChoices = true}>
                                 {TRANSLATIONS.UI.REWARD_GET_CARD}
                             </button>

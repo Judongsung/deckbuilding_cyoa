@@ -1,7 +1,8 @@
 <!-- src/components/DeckBoard.svelte -->
-<script>
-    import { gameStore } from '../stores/gameStore.js';
-    import { TRANSLATIONS, t } from '../utils/i18n.js';
+<script lang="ts">
+    import { gameStore } from '../stores/gameStore.ts';
+    import { TRANSLATIONS, t } from '../utils/i18n.ts';
+    import { I18N_KEY } from '../constants/translation_keys.ts';
     import CardItem from './CardItem.svelte';
 
     $: keywordCounts = $gameStore.deck.reduce((acc, card) => {
@@ -16,7 +17,7 @@
 <div class="deck-section">
     <div class="deck-header">
         <h2>{TRANSLATIONS.UI.DECK_TITLE}</h2>
-        <span class="deck-count">{t('UI', 'DECK_COUNT', { count: $gameStore.player.deckSize })}</span>
+        <span class="deck-count">{t(I18N_KEY.UI.DECK_COUNT, { count: $gameStore.player.deckSize })}</span>
     </div>
 
     {#if $gameStore.deck.length === 0}
@@ -26,7 +27,7 @@
     {:else}
         {#if Object.keys(keywordCounts).length > 0}
             <div class="keyword-summary">
-                <span class="kw-title">💡 현재 덱 시너지:</span>
+                <span class="kw-title">{TRANSLATIONS.UI.DECK_SYNERGY}</span>
                 <div class="kw-tags">
                     {#each Object.entries(keywordCounts) as [kw, count]}
                         <span class="kw-tag">[{TRANSLATIONS.KEYWORDS[kw] || kw}] x{count}</span>

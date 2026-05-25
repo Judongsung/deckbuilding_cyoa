@@ -3,7 +3,7 @@
         "id": "char_warrior",
         "name": "전사",
         "description": "균형 잡힌 공방 능력을 갖춘 기본 캐릭터입니다.",
-        "base_stats": {
+        "baseStats": {
             "hp": 100,
             "gold": 100,
             "attack": 10,
@@ -14,7 +14,7 @@
             "defenseGrowth": 0,
             "deployment": 10
         },
-        "starting_deck": [
+        "startingDeck": [
             "card_strike_01",
             "card_strike_01",
             "card_strike_01",

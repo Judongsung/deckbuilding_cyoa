@@ -6,6 +6,9 @@
  * 플레이어가 가진 유물들이 반응하여 효과를 내도록 관리합니다.
  */
 import { GAME_CONFIG } from '../constants/gameConfig.js';
+import { t } from '../utils/i18n.js';
+import { I18N_KEY } from '../constants/translation_keys.js';
+import type { GameState } from '../types/state.js';
 
 const { ACTIONS } = GAME_CONFIG;
 
@@ -14,14 +17,14 @@ const { ACTIONS } = GAME_CONFIG;
  * 새로운 유물 효과가 생기면 이곳에만 로직을 추가하면 됩니다.
  */
 const relicSubscribers = {
-    [ACTIONS.HEAL]: (state, relic) => {
+    [ACTIONS.HEAL]: (state: GameState, relic: any) => {
         state.player.hp = Math.min(GAME_CONFIG.PLAYER.MAX_HP, state.player.hp + relic.value);
-        state.battleLogs.push(`🏺 [${relic.name}] 효과 발동! 체력을 ${relic.value} 회복했습니다.`);
+        state.battleLogs.push(t(I18N_KEY.LOGS.RELIC_EFFECT_HEAL, { relic: relic.name, value: relic.value }));
         return state;
     },
-    [ACTIONS.ADD_GOLD]: (state, relic) => {
+    [ACTIONS.ADD_GOLD]: (state: GameState, relic: any) => {
         state.player.gold += relic.value;
-        state.battleLogs.push(`🏺 [${relic.name}] 효과 발동! 추가 골드 ${relic.value} 획득.`);
+        state.battleLogs.push(t(I18N_KEY.LOGS.RELIC_EFFECT_GOLD, { relic: relic.name, value: relic.value }));
         return state;
     }
 };
@@ -31,7 +34,7 @@ const relicSubscribers = {
  * @param {Object} state - 게임 상태
  * @param {String} triggerName - 발생한 이벤트 타이밍 (예: 'pre_battle', 'post_battle')
  */
-export function dispatchRelicEvent(state, triggerName) {
+export function dispatchRelicEvent(state: GameState, triggerName: string): GameState {
     if (!state.player.relics || state.player.relics.length === 0) return state;
 
     state.player.relics.forEach(relic => {

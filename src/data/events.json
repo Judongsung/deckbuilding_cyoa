@@ -7,14 +7,14 @@
             {
                 "text": "피를 바친다 (체력 15 감소, 무작위 유물 획득)",
                 "actions": [
-                    { "type": "lose_hp", "value": 15 },
-                    { "type": "get_relic" }
+                    { "type": "LOSE_HP", "value": 15 },
+                    { "type": "GET_RELIC" }
                 ]
             },
             {
                 "text": "불길한 기운을 느끼고 돌아간다",
                 "actions": [
-                    { "type": "leave" }
+                    { "type": "LEAVE" }
                 ]
             }
         ]
@@ -27,14 +27,14 @@
             {
                 "text": "적선한다 (50 골드 감소, 무작위 유물 획득)",
                 "actions": [
-                    { "type": "lose_gold", "value": 50 },
-                    { "type": "get_relic" }
+                    { "type": "LOSE_GOLD", "value": 50 },
+                    { "type": "GET_RELIC" }
                 ]
             },
             {
                 "text": "무시하고 지나간다",
                 "actions": [
-                    { "type": "leave" }
+                    { "type": "LEAVE" }
                 ]
             }
         ]
@@ -47,20 +47,20 @@
             {
                 "text": "마차 안을 깊숙이 뒤진다 (체력 20 감소, 무작위 유물 획득)",
                 "actions": [
-                    { "type": "lose_hp", "value": 20 },
-                    { "type": "get_relic" }
+                    { "type": "LOSE_HP", "value": 20 },
+                    { "type": "GET_RELIC" }
                 ]
             },
             {
                 "text": "주머니에 굴러다니는 동전만 챙긴다 (골드 30 획득)",
                 "actions": [
-                    { "type": "get_gold", "value": 30 }
+                    { "type": "GET_GOLD", "value": 30 }
                 ]
             },
             {
                 "text": "그냥 지나간다",
                 "actions": [
-                    { "type": "leave" }
+                    { "type": "LEAVE" }
                 ]
             }
         ]
@@ -73,20 +73,20 @@
             {
                 "text": "버섯을 베어 문다 (체력 30 회복)",
                 "actions": [
-                    { "type": "heal", "value": 30 }
+                    { "type": "HEAL", "value": 30 }
                 ]
             },
             {
                 "text": "버섯을 캐서 상단에 판다 (골드 40 획득, 체력 10 감소)",
                 "actions": [
-                    { "type": "lose_hp", "value": 10 },
-                    { "type": "get_gold", "value": 40 }
+                    { "type": "LOSE_HP", "value": 10 },
+                    { "type": "GET_GOLD", "value": 40 }
                 ]
             },
             {
                 "text": "무시하고 지나간다",
                 "actions": [
-                    { "type": "leave" }
+                    { "type": "LEAVE" }
                 ]
             }
         ]
@@ -99,13 +99,13 @@
             {
                 "text": "순순히 돈을 낸다 (40 골드 감소)",
                 "actions": [
-                    { "type": "lose_gold", "value": 40 }
+                    { "type": "LOSE_GOLD", "value": 40 }
                 ]
             },
             {
                 "text": "무기를 빼들고 강행돌파한다 (체력 25 감소)",
                 "actions": [
-                    { "type": "lose_hp", "value": 25 }
+                    { "type": "LOSE_HP", "value": 25 }
                 ]
             }
         ]

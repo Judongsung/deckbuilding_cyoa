@@ -6,12 +6,14 @@
  * 골드 차감 및 인벤토리 추가 등 거래 결과를 처리합니다.
  */
 import { GAME_CONFIG } from '../constants/gameConfig.js';
-import { addCardToDeck, removeCardFromDeck } from './deckSystem.js'; // ⭐ 덱 시스템 활용
+import { addCardToDeck, removeCardFromDeck } from './deckSystem.js';
 import { recalculatePlayerStats } from './statSystem.js';
-import { TRANSLATIONS, t } from '../utils/i18n.js';
+import { t } from '../utils/i18n.js';
+import { I18N_KEY } from '../constants/translation_keys.js';
+import type { GameState } from '../types/state.js';
 
 // ⭐ 상점 진입 시 물품을 진열하는 함수 (mapSystem에서 옮겨옴)
-export function generateShopInventory(state) {
+export function generateShopInventory(state: GameState): GameState {
     // 1. 카드 3장 무작위 진열
     let shopCards = [];
     if (state.cardLibrary.length > 0) {
@@ -38,44 +40,44 @@ export function generateShopInventory(state) {
     return state;
 }
 
-export function buyCardFromShop(state, index) {
+export function buyCardFromShop(state: GameState, index: number): GameState {
     let card = state.shopInventory.cards[index];
     let price = GAME_CONFIG.ECONOMY.CARD_PRICES[card.tier] || 25;
     if (state.player.gold >= price) { 
         state.player.gold -= price; 
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'SHOP_BUY_CARD', { card: card.name, price })]; 
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.SHOP_BUY_CARD, { card: card.name, price })]; 
         state = addCardToDeck(state, card);
         
         // 품절 처리
         state.shopInventory.cards.splice(index, 1);
     } else { 
-        alert(TRANSLATIONS.UI.ALERT_NO_GOLD); 
+        alert(t(I18N_KEY.UI.ALERT_NO_GOLD)); 
     } 
     return state;
 }
 
-export function buyRelicFromShop(state, index) {
+export function buyRelicFromShop(state: GameState, index: number): GameState {
     let relic = state.shopInventory.relics[index];
     let price = GAME_CONFIG.ECONOMY.RELIC_PRICE;
     
     if (state.player.gold >= price) { 
         state.player.gold -= price; 
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'SHOP_BUY_RELIC', { relic: relic.name, price })]; 
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.SHOP_BUY_RELIC, { relic: relic.name, price })]; 
         
         state.player.relics.push(relic);
         state = recalculatePlayerStats(state);
         
         state.shopInventory.relics.splice(index, 1);
     } else { 
-        alert(TRANSLATIONS.UI.ALERT_NO_GOLD); 
+        alert(t(I18N_KEY.UI.ALERT_NO_GOLD)); 
     } 
     return state;
 }
 
 // ⭐ 포션 구매
-export function buyPotionFromShop(state, index) {
+export function buyPotionFromShop(state: GameState, index: number): GameState {
     if (state.player.potions.length >= 3) {
-        alert(TRANSLATIONS.UI.ALERT_POTION_FULL);
+        alert(t(I18N_KEY.UI.ALERT_POTION_FULL));
         return state;
     }
     
@@ -84,34 +86,34 @@ export function buyPotionFromShop(state, index) {
     
     if (state.player.gold >= price) { 
         state.player.gold -= price; 
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'SHOP_BUY_POTION', { potion: potion.name, price })]; 
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.SHOP_BUY_POTION, { potion: potion.name, price })]; 
         
         state.player.potions.push(potion);
         state.shopInventory.potions.splice(index, 1);
     } else { 
-        alert(TRANSLATIONS.UI.ALERT_NO_GOLD); 
+        alert(t(I18N_KEY.UI.ALERT_NO_GOLD)); 
     } 
     return state;
 }
 
-export function removeCardInShop(state, index) {
+export function removeCardInShop(state: GameState, index: number): GameState {
     let cost = GAME_CONFIG.ECONOMY.CARD_REMOVAL_COST;
     
     if (state.player.gold >= cost) { 
         // 1. 상점 고유의 로직 (골드 차감 및 로그 작성)
         state.player.gold -= cost; 
         let removedCard = state.deck[index]; 
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'SHOP_REMOVE_CARD', { price: cost, card: removedCard.name })]; 
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.SHOP_REMOVE_CARD, { price: cost, card: removedCard.name })]; 
         
         // 2. 실제 카드 제거 및 스탯 재계산은 덱 시스템에 완벽히 위임
         state = removeCardFromDeck(state, index);
     } else { 
-        alert(TRANSLATIONS.UI.ALERT_NO_GOLD); 
+        alert(t(I18N_KEY.UI.ALERT_NO_GOLD)); 
     } 
     return state;
 }
 
-export function closeShop(state) {
+export function closeShop(state: GameState): GameState {
     state.isShopScreenOpen = false; 
     state.runStatus = GAME_CONFIG.RUN_STATUS.MAP_NAVIGATING; // 복귀
     return state;

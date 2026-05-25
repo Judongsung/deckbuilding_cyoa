@@ -8,9 +8,11 @@
 import { GAME_CONFIG } from '../constants/gameConfig.js';
 import { initPlayerStats } from './statSystem.js';
 import { generateMap } from './mapSystem.js';
-import { hydrateLibraries, t } from '../utils/i18n.js';
+import { t } from '../utils/i18n.js';
+import { I18N_KEY } from '../constants/translation_keys.js';
+import type { GameState } from '../types/state.js';
 
-export function initNewGameRun(state, characterId) {
+export function initNewGameRun(state: GameState, characterId: string): GameState {
     const { RUN_STATUS } = GAME_CONFIG;
 
     let charDef = null;
@@ -20,23 +22,23 @@ export function initNewGameRun(state, characterId) {
 
     if (charDef) {
         state.basePlayerParams = {
-            hp: charDef.base_stats.hp,
-            gold: charDef.base_stats.gold,
-            baseAttack: charDef.base_stats.attack,
-            attackCap: charDef.base_stats.attackCap,
-            attackGrowth: charDef.base_stats.attackGrowth,
-            baseDefense: charDef.base_stats.defense,
-            defenseCap: charDef.base_stats.defenseCap,
-            defenseGrowth: charDef.base_stats.defenseGrowth,
-            deployment: charDef.base_stats.deployment
+            hp: charDef.baseStats.hp,
+            gold: charDef.baseStats.gold,
+            attack: charDef.baseStats.attack,
+            attackCap: charDef.baseStats.attackCap,
+            attackGrowth: charDef.baseStats.attackGrowth,
+            defense: charDef.baseStats.defense,
+            defenseCap: charDef.baseStats.defenseCap,
+            defenseGrowth: charDef.baseStats.defenseGrowth,
+            deployment: charDef.baseStats.deployment
         };
     }
 
     state = initPlayerStats(state);
 
     state.deck = [];
-    if (charDef && charDef.starting_deck && state.cardLibrary) {
-        charDef.starting_deck.forEach(cardId => {
+    if (charDef && charDef.startingDeck && state.cardLibrary) {
+        charDef.startingDeck.forEach(cardId => {
             const cardDef = state.cardLibrary.find(c => c.id === cardId);
             if (cardDef) {
                 state.deck.push({ ...JSON.parse(JSON.stringify(cardDef)), uid: Math.random().toString(36).substr(2, 9), isUpgraded: false });
@@ -53,12 +55,16 @@ export function initNewGameRun(state, characterId) {
     state.shopInventory = { cards: [], relics: [], potions: [] };
     state.rewardCards = [];
     state.activeBattleBuffs = [];
-    state.enemy = null; 
 
     state.player.deckSize = state.deck.length; 
     
+    state.map.currentFloor = 0;
+    state.map.selectedNode = null;
+    state.map.lastCompletedNode = null;
+    state.map.history = [];
+    
     state.runStatus = RUN_STATUS.MAP_NAVIGATING; 
-    state.battleLogs = [t('LOGS', 'GAME_START')];
+    state.battleLogs = [t(I18N_KEY.LOGS.GAME_START)];
 
     return state;
 }

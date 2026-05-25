@@ -6,14 +6,15 @@ let translationsCache = null;
 export async function initLanguage() {
     let lang = GAME_CONFIG.LANGUAGE;
     try {
-        const module = await import(`../constants/translations_${lang}.js`);
+        const module = await import(`../constants/translations_${lang}.ts`);
         translationsCache = module.TRANSLATIONS;
         console.log(`[i18n] Loaded language: ${lang}`);
     } catch (err) {
         console.warn(`[i18n] Failed to load language '${lang}', falling back to '${GAME_CONFIG.DEFAULT_LANGUAGE}'`);
         try {
-            const fallbackModule = await import(`../constants/translations_${GAME_CONFIG.DEFAULT_LANGUAGE}.js`);
+            const fallbackModule = await import(`../constants/translations_${GAME_CONFIG.DEFAULT_LANGUAGE}.ts`);
             translationsCache = fallbackModule.TRANSLATIONS;
+            // @ts-ignore
             GAME_CONFIG.LANGUAGE = GAME_CONFIG.DEFAULT_LANGUAGE; // Fallback 성공 시 현재 언어도 업데이트
             console.log(`[i18n] Loaded fallback language: ${GAME_CONFIG.DEFAULT_LANGUAGE}`);
         } catch (fatalErr) {
@@ -34,22 +35,35 @@ export const TRANSLATIONS = new Proxy({}, {
     }
 });
 
-export function t(category, key, variables = {}) {
-    if (!translationsCache) return `${category}.${key}`;
-    const dict = translationsCache[category];
-    if (!dict) return `${category}.${key}`;
+import { I18N_KEY } from '../constants/translation_keys.ts';
+
+export type Key = typeof I18N_KEY[keyof typeof I18N_KEY][keyof typeof I18N_KEY[keyof typeof I18N_KEY]];
+
+export function t(key: string, variables: Record<string, any> = {}): string {
+    if (!translationsCache) return String(key);
     
-    let text = dict[key] || `${category}.${key}`;
+    let text: string | null = null;
+    for (const category of Object.values(translationsCache)) {
+        if (category && typeof category === 'object' && key in category) {
+            text = (category as any)[key];
+            break;
+        }
+    }
+    
+    if (!text) return String(key);
     if (typeof text !== 'string') return text;
     
     for (const [varName, value] of Object.entries(variables)) {
-        text = text.replace(new RegExp(`\\{${varName}\\}`, 'g'), value);
+        text = text.replace(new RegExp(`\\{${varName}\\}`, 'g'), String(value));
     }
     return text;
 }
 
 export function hydrateLibraries(cards, relics, enemies, events, potions, characters) {
-    if (!translationsCache || !translationsCache.DATA) return { cards, relics, enemies, events, potions, characters };
+    if (!translationsCache || !translationsCache.DATA) {
+        console.warn('[i18n] hydrateLibraries() called before translations loaded — text will not be applied.');
+        return { cards, relics, enemies, events, potions, characters };
+    }
     const DATA = translationsCache.DATA;
 
     const hCards = cards.map(c => ({ ...c, ...(DATA.CARDS[c.id] || {}) }));

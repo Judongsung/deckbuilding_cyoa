@@ -1,8 +1,9 @@
-<script>
+<script lang="ts">
     import { createEventDispatcher } from 'svelte';
-    import { gameStore } from '../stores/gameStore.js';
-    import { GAME_CONFIG } from '../constants/gameConfig.js'; 
-    import { TRANSLATIONS } from '../utils/i18n.js';
+    import { gameStore } from '../stores/gameStore.ts';
+    import { GAME_CONFIG } from '../constants/gameConfig.ts'; 
+    import { t } from '../utils/i18n.ts';
+    import { I18N_KEY } from '../constants/translation_keys.ts';
 
     const dispatch = createEventDispatcher();
 
@@ -14,7 +15,7 @@
 
     function handleNewGameClick() {
         if (hasSave) {
-            const confirmReset = confirm(TRANSLATIONS.UI.CONFIRM_RESET || "진행 중인 데이터가 삭제됩니다. 새로 시작하시겠습니까?");
+            const confirmReset = confirm(t(I18N_KEY.UI.CONFIRM_RESET));
             if (!confirmReset) return;
         }
         showCharacterSelect = true;
@@ -32,26 +33,26 @@
 
 <div class="menu-container">
     <div class="title-section">
-        <h1>SPYRE<br><span class="subtitle">{TRANSLATIONS.UI.SUBTITLE || '덱빌딩 오토배틀러'}</span></h1>
+        <h1>SPYRE<br><span class="subtitle">{t(I18N_KEY.UI.SUBTITLE)}</span></h1>
     </div>
 
     {#if !showCharacterSelect}
         <div class="button-section">
             <button class="menu-btn continue-btn" disabled={!hasSave} on:click={handleContinue}>
                 {#if hasSave}
-                    {TRANSLATIONS.UI.BTN_CONTINUE || '▶ 이어하기'}
+                    {t(I18N_KEY.UI.BTN_CONTINUE)}
                 {:else}
-                    {TRANSLATIONS.UI.NO_SAVE || '(저장된 데이터 없음)'}
+                    {t(I18N_KEY.UI.NO_SAVE)}
                 {/if}
             </button>
             
             <button class="menu-btn new-btn" on:click={handleNewGameClick}>
-                {TRANSLATIONS.UI.BTN_NEW_GAME || '새로운 모험 시작'}
+                {t(I18N_KEY.UI.BTN_NEW_GAME)}
             </button>
         </div>
     {:else}
         <div class="character-select-section">
-            <h2>{TRANSLATIONS.UI.SELECT_CLASS || '직업 선택'}</h2>
+            <h2>{t(I18N_KEY.UI.SELECT_CLASS)}</h2>
             <div class="character-list">
                 {#each characters as char}
                     <button class="char-btn" on:click={() => selectCharacterAndStart(char.id)}>
@@ -60,12 +61,12 @@
                     </button>
                 {/each}
             </div>
-            <button class="menu-btn back-btn" on:click={() => showCharacterSelect = false}>{TRANSLATIONS.UI.BTN_LEAVE || '돌아가기'}</button>
+            <button class="menu-btn back-btn" on:click={() => showCharacterSelect = false}>{t(I18N_KEY.UI.BTN_LEAVE)}</button>
         </div>
     {/if}
 
     <div class="footer">
-        <p>{TRANSLATIONS.UI.VERSION || '프로토타입 v1.0.0'}</p>
+        <p>{t(I18N_KEY.UI.VERSION)}</p>
     </div>
 </div>
 

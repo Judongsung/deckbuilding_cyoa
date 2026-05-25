@@ -1,7 +1,7 @@
-<script>
-    import { getCardDescription } from '../utils/cardTextGenerator.js';
-    import { GAME_CONFIG } from '../constants/gameConfig.js';
-    import { TRANSLATIONS } from '../utils/i18n.js';
+<script lang="ts">
+    import { getCardDescription } from '../utils/cardTextGenerator.ts';
+    import { GAME_CONFIG } from '../constants/gameConfig.ts';
+    import { TRANSLATIONS } from '../utils/i18n.ts';
     
     export let card;
     export let isUpgraded = false;

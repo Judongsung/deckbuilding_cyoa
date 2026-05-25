@@ -1,22 +1,23 @@
-<script>
-    import { gameStore } from '../stores/gameStore.js';
-    import { TRANSLATIONS, t } from '../utils/i18n.js';
+<script lang="ts">
+    import { gameStore } from '../stores/gameStore.ts';
+    import { TRANSLATIONS, t } from '../utils/i18n.ts';
+    import { I18N_KEY } from '../constants/translation_keys.ts';
 </script>
 
 <div class="stats-board">
     <div>
         <h3>{TRANSLATIONS.UI.STATS_TITLE}</h3>
-        <p>{t('UI', 'STATS_HP', { hp: $gameStore.player.hp })}</p>
-        <p>{@html t('UI', 'STATS_GOLD', { gold: $gameStore.player.gold })}</p>
-        <p>{t('UI', 'STATS_ATTACK', { base: $gameStore.player.baseAttack, growth: $gameStore.player.attackGrowth, cap: $gameStore.player.attackCap })}</p>
-        <p>{t('UI', 'STATS_DEFENSE', { base: $gameStore.player.baseDefense, growth: $gameStore.player.defenseGrowth, cap: $gameStore.player.defenseCap })}</p>
-        <p>{t('UI', 'STATS_DEPLOYMENT', { deployment: $gameStore.player.deployment, deckSize: $gameStore.player.deckSize })}</p>
+        <p>{t(I18N_KEY.UI.STATS_HP, { hp: $gameStore.player.hp })}</p>
+        <p>{@html t(I18N_KEY.UI.STATS_GOLD, { gold: $gameStore.player.gold })}</p>
+        <p>{t(I18N_KEY.UI.STATS_ATTACK, { base: $gameStore.player.attack, growth: $gameStore.player.attackGrowth, cap: $gameStore.player.attackCap })}</p>
+        <p>{t(I18N_KEY.UI.STATS_DEFENSE, { base: $gameStore.player.defense, growth: $gameStore.player.defenseGrowth, cap: $gameStore.player.defenseCap })}</p>
+        <p>{t(I18N_KEY.UI.STATS_DEPLOYMENT, { deployment: $gameStore.player.deployment, deckSize: $gameStore.player.deckSize })}</p>
     </div>
 </div>
 
 <hr class="divider"/>
         
-<h3>{t('UI', 'STATS_RELICS', { count: $gameStore.player.relics ? $gameStore.player.relics.length : 0 })}</h3>
+<h3>{t(I18N_KEY.UI.STATS_RELICS, { count: $gameStore.player.relics ? $gameStore.player.relics.length : 0 })}</h3>
 <div class="relic-container">
     {#if !$gameStore.player.relics || $gameStore.player.relics.length === 0}
         <span class="empty-msg">{TRANSLATIONS.UI.STATS_NO_RELICS}</span>
@@ -31,7 +32,7 @@
 
 <hr class="divider">
         
-<h3>{t('UI', 'STATS_POTIONS', { count: $gameStore.player.potions ? $gameStore.player.potions.length : 0 })}</h3>
+<h3>{t(I18N_KEY.UI.STATS_POTIONS, { count: $gameStore.player.potions ? $gameStore.player.potions.length : 0 })}</h3>
 <div class="potion-container">
     {#if !$gameStore.player.potions || $gameStore.player.potions.length === 0}
         <span class="empty-msg">{TRANSLATIONS.UI.STATS_NO_POTIONS}</span>

@@ -17,14 +17,14 @@
         "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -1 },
         "effects": [
             {
-                "trigger": "pre_battle", "target": "self_stats",
+                "trigger": "PRE_BATTLE", "target": "SELF_STATS",
                 "action": "increase_stat_by_keyword_count", "stat_type": "attackGrowth",
                 "target_keyword": "광분", "multiplier": 1
             }
         ],
         "upgraded_effects": [
             {
-                "trigger": "pre_battle", "target": "self_stats",
+                "trigger": "PRE_BATTLE", "target": "SELF_STATS",
                 "action": "increase_stat_by_keyword_count", "stat_type": "attackGrowth",
                 "target_keyword": "광분", "multiplier": 2
             }
@@ -48,14 +48,14 @@
         "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -1 },
         "effects": [
             {
-                "trigger": "pre_battle", "target": "self_stats",
+                "trigger": "PRE_BATTLE", "target": "SELF_STATS",
                 "action": "increase_stat_by_keyword_count", "stat_type": "defenseCap",
                 "target_keyword": "방어", "multiplier": 10
             }
         ],
         "upgraded_effects": [
             {
-                "trigger": "pre_battle", "target": "self_stats",
+                "trigger": "PRE_BATTLE", "target": "SELF_STATS",
                 "action": "increase_stat_by_keyword_count", "stat_type": "defenseCap",
                 "target_keyword": "방어", "multiplier": 10
             }
@@ -80,15 +80,15 @@
         "upgraded_base_stats": { "hp": 0, "attack": 2, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
         "effects": [
             {
-                "trigger": "pre_battle", "target": "self_stats",
-                "action": "increase_stat_by_deployment", "stat_type": "attackCap",
+                "trigger": "PRE_BATTLE", "target": "SELF_STATS",
+                "action": "INCREASE_STAT_BY_DEPLOYMENT", "stat_type": "attackCap",
                 "multiplier": 5
             }
         ],
         "upgraded_effects": [
             {
-                "trigger": "pre_battle", "target": "self_stats",
-                "action": "increase_stat_by_deployment", "stat_type": "attackCap",
+                "trigger": "PRE_BATTLE", "target": "SELF_STATS",
+                "action": "INCREASE_STAT_BY_DEPLOYMENT", "stat_type": "attackCap",
                 "multiplier": 8
             }
         ]
@@ -102,24 +102,24 @@
         "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": 0 },
         "effects": [
             {
-                "trigger": "pre_battle", "target": "self_stats",
+                "trigger": "PRE_BATTLE", "target": "SELF_STATS",
                 "condition": { "type": "deck_size_less_than_or_equal", "value": 10 },
                 "action": "increase_stat", "stat_type": "attack", "value": 10
             },
             {
-                "trigger": "pre_battle", "target": "self_stats",
+                "trigger": "PRE_BATTLE", "target": "SELF_STATS",
                 "condition": { "type": "deck_size_less_than_or_equal", "value": 10 },
                 "action": "increase_stat", "stat_type": "defense", "value": 10
             }
         ],
         "upgraded_effects": [
             {
-                "trigger": "pre_battle", "target": "self_stats",
+                "trigger": "PRE_BATTLE", "target": "SELF_STATS",
                 "condition": { "type": "deck_size_less_than_or_equal", "value": 10 },
                 "action": "increase_stat", "stat_type": "attack", "value": 15
             },
             {
-                "trigger": "pre_battle", "target": "self_stats",
+                "trigger": "PRE_BATTLE", "target": "SELF_STATS",
                 "condition": { "type": "deck_size_less_than_or_equal", "value": 10 },
                 "action": "increase_stat", "stat_type": "defense", "value": 15
             }
@@ -134,24 +134,24 @@
         "upgraded_base_stats": { "hp": 0, "attack": 0, "attackCap": 0, "attackGrowth": 0, "defense": 0, "defenseCap": 0, "defenseGrowth": 0, "deployment": -2 },
         "effects": [
             {
-                "trigger": "pre_battle", "target": "deck",
+                "trigger": "PRE_BATTLE", "target": "DECK",
                 "condition": { "type": "has_keyword", "value": "공격" },
                 "action": "add_keyword", "value": "독"
             },
             {
-                "trigger": "pre_battle", "target": "self_stats",
+                "trigger": "PRE_BATTLE", "target": "SELF_STATS",
                 "action": "increase_stat_by_keyword_count", "stat_type": "attackGrowth",
                 "target_keyword": "독", "multiplier": 2
             }
         ],
         "upgraded_effects": [
             {
-                "trigger": "pre_battle", "target": "deck",
+                "trigger": "PRE_BATTLE", "target": "DECK",
                 "condition": { "type": "has_keyword", "value": "공격" },
                 "action": "add_keyword", "value": "독"
             },
             {
-                "trigger": "pre_battle", "target": "self_stats",
+                "trigger": "PRE_BATTLE", "target": "SELF_STATS",
                 "action": "increase_stat_by_keyword_count", "stat_type": "attackGrowth",
                 "target_keyword": "독", "multiplier": 3
             }

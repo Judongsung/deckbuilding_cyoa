@@ -1,16 +1,26 @@
-// src/systems/effectHandlers.js
+// src/systems/effectHandlers.ts
 
-import { mapStatTypeToKey } from './statSystem.js';
 import { GAME_CONFIG } from '../constants/gameConfig.js';
+import type { GameState } from '../types/state.js';
 
 /**
+ * cards.json의 statType/sourceStat 문자열을 player 객체의 실제 키로 변환합니다.
+ * GAME_CONFIG.KEYWORDS / 직접 상수 문자열 기준으로 매핑합니다.
+ *
  * 카드 효과들의 행동(Action)을 정의하는 핸들러 사전입니다.
  * phase 1: 스탯 계산 전 먼저 처리되어야 하는 효과 (예: 키워드 전파)
  * phase 2: 그 외 스탯 계산 및 증폭 관련 효과
  * phase 3: 다른 스탯의 최종값에 비례하는 효과 (곱연산 등)
  */
+/**
+ * SCREAMING_SNAKE_CASE statType 문자열을 player 객체의 camelCase 키로 변환합니다.
+ * 예: "ATTACK" → "attack", "ATTACK_CAP" → "attackCap"
+ */
+function statTypeToKey(type: string): string {
+    return type.toLowerCase().replace(/_([a-z])/g, (_, c) => c.toUpperCase());
+}
 
-export function evaluateCondition(state, condition) {
+export function evaluateCondition(state: GameState, condition: any): boolean {
     if (!condition) return true;
 
     switch (condition.type) {
@@ -46,8 +56,8 @@ export const CardEffectHandlers = {
     [GAME_CONFIG.EFFECT_ACTIONS.INC_STAT_BY_KEYWORD]: {
         phase: 2,
         execute: (state, effect, p) => {
-            let targetCount = state.deck.filter(c => c.currentKeywords.includes(effect.target_keyword)).length;
-            let statKey = mapStatTypeToKey(effect.stat_type);
+            const targetCount = state.deck.filter(c => c.currentKeywords.includes(effect.targetKeyword)).length;
+            const statKey = statTypeToKey(effect.statType);
             if (statKey) {
                 p[statKey] += (targetCount * effect.multiplier);
             }
@@ -58,7 +68,7 @@ export const CardEffectHandlers = {
     [GAME_CONFIG.EFFECT_ACTIONS.INC_STAT]: {
         phase: 2,
         execute: (state, effect, p) => {
-            let statKey = mapStatTypeToKey(effect.stat_type);
+            const statKey = statTypeToKey(effect.statType);
             if (statKey) {
                 p[statKey] += effect.value;
             }
@@ -69,7 +79,7 @@ export const CardEffectHandlers = {
     [GAME_CONFIG.EFFECT_ACTIONS.MUL_STAT]: {
         phase: 3,
         execute: (state, effect, p) => {
-            let statKey = mapStatTypeToKey(effect.stat_type);
+            const statKey = statTypeToKey(effect.statType);
             if (statKey) {
                 p[statKey] = Math.floor(p[statKey] * effect.multiplier);
             }
@@ -80,8 +90,8 @@ export const CardEffectHandlers = {
     [GAME_CONFIG.EFFECT_ACTIONS.ADD_STAT_BASED_ON_OTHER]: {
         phase: 3,
         execute: (state, effect, p) => {
-            let targetKey = mapStatTypeToKey(effect.stat_type);
-            let sourceKey = mapStatTypeToKey(effect.source_stat);
+            const targetKey = statTypeToKey(effect.statType);
+            const sourceKey = statTypeToKey(effect.sourceStat);
             if (targetKey && sourceKey) {
                 p[targetKey] += Math.floor(p[sourceKey] * effect.multiplier);
             }

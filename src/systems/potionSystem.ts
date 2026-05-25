@@ -8,8 +8,10 @@
 import { GAME_CONFIG } from '../constants/gameConfig.js';
 import { recalculatePlayerStats } from './statSystem.js';
 import { t } from '../utils/i18n.js';
+import { I18N_KEY } from '../constants/translation_keys.js';
+import type { GameState } from '../types/state.js';
 
-export function usePotion(state, index) {
+export function usePotion(state: GameState, index: number): GameState {
     const { RUN_STATUS, PLAYER, ACTIONS } = GAME_CONFIG; // ⭐ ACTIONS 불러오기
     
     if (state.runStatus !== RUN_STATUS.MAP_NAVIGATING && state.runStatus !== RUN_STATUS.IN_NODE_ACTION) return state;
@@ -19,11 +21,11 @@ export function usePotion(state, index) {
     // ⭐ 문자열 대신 상수 사용
     if (potion.action === GAME_CONFIG.ACTIONS.HEAL) {
         state.player.hp = Math.min(GAME_CONFIG.PLAYER.MAX_HP, state.player.hp + potion.value);
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'POTION_USE_HEAL', { potion: potion.name, value: potion.value })];
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.POTION_USE_HEAL, { potion: potion.name, value: potion.value })];
     } 
     else if (potion.action === GAME_CONFIG.ACTIONS.ADD_TEMP_STAT) {
         state.activeBattleBuffs.push(potion);
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'POTION_USE_BUFF', { potion: potion.name })];
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.POTION_USE_BUFF, { potion: potion.name })];
     }
 
     state.player.potions.splice(index, 1);

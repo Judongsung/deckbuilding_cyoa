@@ -1,12 +1,13 @@
-<script>
+<script lang="ts">
     import { onMount } from 'svelte';
-    import { gameStore } from './stores/gameStore.js';
-    import { hydrateLibraries } from './utils/i18n.js';
+    import { gameStore } from './stores/gameStore.ts';
+    import { hydrateLibraries } from './utils/i18n.ts';
     import MainMenu from './components/MainMenu.svelte'; 
     import GameEndOverlay from './components/GameEndOverlay.svelte';
     import LeftPanel from './components/LeftPanel.svelte';
     import CenterPanel from './components/CenterPanel.svelte';
     import RightPanel from './components/RightPanel.svelte';
+    import { GAME_CONFIG } from './constants/gameConfig.ts';
 
     // ⭐ 카드와 유물 데이터 한 번에 불러오기
     import cardsData from './data/cards.json';
@@ -21,7 +22,7 @@
         gameStore.loadLibraries(h.cards, h.relics, h.enemies, h.events, h.potions, h.characters);
     });
 
-    let currentScreen = 'MENU'; 
+    let currentScreen = GAME_CONFIG.APP_SCREENS.MENU; 
 
     // 패널 크기 조절 상태
     let leftWidth = 300;
@@ -45,16 +46,16 @@
 
 <svelte:window on:mousemove={onMouseMove} on:mouseup={onMouseUp} />
 
-{#if currentScreen === 'MENU'}
-    <MainMenu on:enterGame={() => currentScreen = 'GAME'} />
+{#if currentScreen === GAME_CONFIG.APP_SCREENS.MENU}
+    <MainMenu on:enterGame={() => currentScreen = GAME_CONFIG.APP_SCREENS.GAME} />
 {:else}
     <main style="--left-width: {leftWidth}px; --right-width: {rightWidth}px;" class:dragging={isDraggingLeft || isDraggingRight}>
         <GameEndOverlay on:returnToMenu={() => {
             gameStore.returnToMainMenu();
-            currentScreen = 'MENU';
+            currentScreen = GAME_CONFIG.APP_SCREENS.MENU;
         }} /> 
         
-        <LeftPanel on:returnToMenu={() => currentScreen = 'MENU'} />
+        <LeftPanel on:returnToMenu={() => currentScreen = GAME_CONFIG.APP_SCREENS.MENU} />
         
         <!-- svelte-ignore a11y-no-static-element-interactions -->
         <div class="resizer" on:mousedown={() => isDraggingLeft = true}></div>

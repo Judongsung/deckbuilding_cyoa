@@ -9,15 +9,17 @@ import { GAME_CONFIG } from '../constants/gameConfig.js';
 import { initPlayerStats, recalculatePlayerStats } from './statSystem.js';
 import { generateShopInventory } from './shopSystem.js';
 import { setupEncounter } from './battleSystem.js';
-import { TRANSLATIONS, t } from '../utils/i18n.js';
+import { t } from '../utils/i18n.js';
+import { I18N_KEY } from '../constants/translation_keys.js';
 import { openTreasure } from './treasureSystem.js';
+import type { GameState, MapNode } from '../types/state.js';
 
 /**
  * 순수하게 지도 구조를 생성하고 내비게이션 좌표만 초기화합니다.
  * @param {Object} state - 현재 게임 상태
  * @returns {Object} - 지도 구조가 생성된 상태
  */
-export function generateMap(state) {
+export function generateMap(state: GameState): GameState {
     const { NODE_TYPES, MAP } = GAME_CONFIG;
     
     let newMap = [];
@@ -37,7 +39,7 @@ export function generateMap(state) {
     // 1. 경로(뼈대) 생성: 1층부터 (MAX_FLOORS - 1)층까지
     for (let f = 1; f < MAP.MAX_FLOORS; f++) {
         let floorNodes = [];
-        let nextIndices = new Set();
+        let nextIndices = new Set<number>();
         let prev_target = -1;
         
         for (let idx = 0; idx < currentIndices.length; idx++) {
@@ -109,7 +111,7 @@ export function generateMap(state) {
         }
         
         // 제약 2: 상점, 휴식처, 엘리트는 연속 등장 금지
-        const noConsecutive = [NODE_TYPES.SHOP, NODE_TYPES.REST, NODE_TYPES.ELITE];
+        const noConsecutive: string[] = [NODE_TYPES.SHOP, NODE_TYPES.REST, NODE_TYPES.ELITE];
         availableTypes = availableTypes.filter(t => {
             if (noConsecutive.includes(t)) {
                 if (parentsTypes.includes(t)) return false;
@@ -145,25 +147,21 @@ export function generateMap(state) {
     }
     
     state.map.structure = newMap; 
-    state.map.currentFloor = 1; 
-    state.map.selectedNode = null; 
-    state.map.lastCompletedNode = null;
-    state.map.history = [];
     
     return state;
 }
 
-export function selectNode(state, node) {
-    const { RUN_STATUS, NODE_TYPES, EVENT, ENEMY, PLAYER } = GAME_CONFIG;
+export function selectNode(state: GameState, node: MapNode): GameState {
+    const { RUN_STATUS, NODE_TYPES, EVENT, PLAYER } = GAME_CONFIG as any;
     
     if (state.runStatus !== RUN_STATUS.MAP_NAVIGATING) return state; 
-    if (node.floor !== state.map.currentFloor) { 
-        alert(t('UI', 'ALERT_WRONG_FLOOR', { floor: state.map.currentFloor })); 
+    if (node.floor !== state.map.currentFloor + 1) { 
+        alert(t(I18N_KEY.UI.ALERT_WRONG_FLOOR, { floor: state.map.currentFloor + 1 })); 
         return state; 
     }
     if (state.map.lastCompletedNode) { 
         if (!state.map.lastCompletedNode.connections.includes(node.index)) { 
-            alert(TRANSLATIONS.UI.ALERT_DISCONNECTED); 
+            alert(t(I18N_KEY.UI.ALERT_DISCONNECTED)); 
             return state; 
         } 
     }
@@ -175,14 +173,14 @@ export function selectNode(state, node) {
     state.runStatus = RUN_STATUS.IN_NODE_ACTION; // ⭐ 상호작용 상태 진입
     
     if (node.type === NODE_TYPES.REST) {
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'NODE_REST', { floor: node.floor })];
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.NODE_REST, { floor: node.floor })];
         state.isRestScreenOpen = true;
     } 
     else if (node.type === NODE_TYPES.TREASURE) {
         state = openTreasure(state);
     } 
     else if (node.type === NODE_TYPES.SHOP) {
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'NODE_SHOP')]; 
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.NODE_SHOP)]; 
         
         // ⭐ 상점 진열 및 팝업 오픈 로직을 shopSystem에 완벽히 위임!
         state = generateShopInventory(state);
@@ -193,7 +191,7 @@ export function selectNode(state, node) {
         state.map.selectedNode = null;
     }
     else if (node.type === NODE_TYPES.UNKNOWN) {
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'NODE_UNKNOWN', { floor: node.floor })];
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.NODE_UNKNOWN, { floor: node.floor })];
         if (state.eventLibrary.length > 0) {
             const randomEvent = state.eventLibrary[Math.floor(Math.random() * state.eventLibrary.length)];
             state.currentEvent = randomEvent;

@@ -1,6 +1,6 @@
-<script>
-    import { gameStore } from '../stores/gameStore.js';
-    import { TRANSLATIONS } from '../utils/i18n.js';
+<script lang="ts">
+    import { gameStore } from '../stores/gameStore.ts';
+    import { TRANSLATIONS } from '../utils/i18n.ts';
 
     let isOpen = false;
 </script>

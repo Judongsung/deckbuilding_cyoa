@@ -9,25 +9,26 @@ import { GAME_CONFIG } from '../constants/gameConfig.js';
 import { recalculatePlayerStats } from './statSystem.js';
 import { dispatchRelicEvent } from './relicSystem.js';
 import { t } from '../utils/i18n.js';
+import { I18N_KEY } from '../constants/translation_keys.js';
 import { generateBattleRewards } from './rewardSystem.js';
+import type { GameState, MapNode } from '../types/state.js';
 
-export function setupEncounter(state, node) {
-    const { ENEMIES } = GAME_CONFIG;
-    let possibleEnemies = state.enemyLibrary.filter(e => e.type === node.type);
+export function setupEncounter(state: GameState, node: MapNode): GameState {
+    let possibleEnemies = state.enemyLibrary.filter((e: any) => e.type === node.type);
     if (possibleEnemies.length === 0) possibleEnemies = state.enemyLibrary.filter(e => e.type === GAME_CONFIG.NODE_TYPES.NORMAL);
     if (possibleEnemies.length === 0) possibleEnemies = state.enemyLibrary;
     let enemyTemplate = possibleEnemies[Math.floor(Math.random() * possibleEnemies.length)];
     
-    let floorBonusHp = (node.floor - 1) * (enemyTemplate.hpGrowth || enemyTemplate.hp_growth || 0);
+    let floorBonusHp = (node.floor - 1) * (enemyTemplate.hpGrowth || 0);
     let floorBonusAtk = (node.floor - 1) * (enemyTemplate.attackGrowth || 0);
     
-    let baseAttack = enemyTemplate.base_stats ? (enemyTemplate.base_stats.attack || 0) : (enemyTemplate.base_attack || 0);
-    let baseDefense = enemyTemplate.base_stats ? (enemyTemplate.base_stats.defense || 0) : (enemyTemplate.base_defense || 0);
+    let baseAttack = enemyTemplate.baseStats ? (enemyTemplate.baseStats.attack || 0) : 0;
+    let baseDefense = enemyTemplate.baseStats ? (enemyTemplate.baseStats.defense || 0) : 0;
 
     let enemy = { 
         name: enemyTemplate.name, 
-        hp: (enemyTemplate.hp || enemyTemplate.base_hp || Number(enemyTemplate.hp)) + floorBonusHp, 
-        maxHp: (enemyTemplate.hp || enemyTemplate.base_hp || Number(enemyTemplate.hp)) + floorBonusHp, 
+        hp: (enemyTemplate.hp || 0) + floorBonusHp, 
+        maxHp: (enemyTemplate.hp || 0) + floorBonusHp, 
         attack: baseAttack + floorBonusAtk, 
         defense: baseDefense,
         attackGrowth: enemyTemplate.attackGrowth || 0,
@@ -37,7 +38,7 @@ export function setupEncounter(state, node) {
     };
     
     state.currentEnemy = enemy;
-    state.battleLogs = [...state.battleLogs, t('LOGS', 'BATTLE_ENCOUNTER', { floor: node.floor, enemy: enemy.name })];
+    state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.BATTLE_ENCOUNTER, { floor: node.floor, enemy: enemy.name })];
     
     // 전투 팝업 열기
     state.isBattlePopupOpen = true;
@@ -47,7 +48,7 @@ export function setupEncounter(state, node) {
     return state;
 }
 
-export function executeBattle(state) {
+export function executeBattle(state: GameState): GameState {
     const { ACTIONS } = GAME_CONFIG;
     if (!state.currentEnemy || !state.map.selectedNode) return state;
 
@@ -55,26 +56,31 @@ export function executeBattle(state) {
     let p = { ...state.player };
     let e = { ...state.currentEnemy };
 
-    roundLogs.push(t('LOGS', 'BATTLE_START', { enemy: e.name }));
+    roundLogs.push(t(I18N_KEY.LOGS.BATTLE_START, { enemy: e.name }));
 
     if (state.activeBattleBuffs && state.activeBattleBuffs.length > 0) {
         state.activeBattleBuffs.forEach(buff => {
             if (buff.action === ACTIONS.ADD_TEMP_STAT) {
                 p[buff.stat] += buff.value; 
-                roundLogs.push(t('LOGS', 'BATTLE_POTION_EFFECT', { stat: buff.stat, value: buff.value }));
+                roundLogs.push(t(I18N_KEY.LOGS.BATTLE_POTION_EFFECT, { stat: buff.stat, value: buff.value }));
             }
         });
     }
 
     let turn = 1;
-    while (p.hp > 0 && e.hp > 0 && turn <= 100) {
+    const MAX_TURNS = GAME_CONFIG.BATTLE.MAX_TURNS;
+    while (p.hp > 0 && e.hp > 0 && turn <= MAX_TURNS) {
         let multiplier = 1;
         if (p.deckSize > 0 && p.deployment > 0) {
-            multiplier = Math.round((p.deployment / p.deckSize) * 100) / 100;
+            const maxMult = p.deployment / p.deckSize;
+            const min = Math.min(1, maxMult);
+            const max = Math.max(1, maxMult);
+            multiplier = min + Math.random() * (max - min);
+            multiplier = Math.round(multiplier * 100) / 100;
         }
 
-        let curAtk = Math.floor((p.baseAttack + (turn * p.attackGrowth)) * multiplier);
-        let curDef = Math.floor((p.baseDefense + (turn * p.defenseGrowth)) * multiplier);
+        let curAtk = Math.floor((p.attack + (turn * p.attackGrowth)) * multiplier);
+        let curDef = Math.floor((p.defense + (turn * p.defenseGrowth)) * multiplier);
         
         if (p.attackCap > 0 && curAtk > p.attackCap) curAtk = p.attackCap;
         if (p.defenseCap > 0 && curDef > p.defenseCap) curDef = p.defenseCap;
@@ -82,7 +88,7 @@ export function executeBattle(state) {
         let dmgToEnemy = Math.max(0, curAtk - e.defense);
         let dmgToPlayer = Math.max(0, e.attack - curDef);
 
-        roundLogs.push(t('LOGS', 'BATTLE_TURN_INFO', { 
+        roundLogs.push(t(I18N_KEY.LOGS.BATTLE_TURN_INFO, { 
             turn, 
             multiplier, 
             curAtk, 
@@ -94,25 +100,25 @@ export function executeBattle(state) {
             p.hp -= dmgToPlayer;
         }
 
-        roundLogs.push(t('LOGS', 'BATTLE_DAMAGE', { enemy: e.name, dmgToEnemy, dmgToPlayer }));
+        roundLogs.push(t(I18N_KEY.LOGS.BATTLE_DAMAGE, { enemy: e.name, dmgToEnemy, dmgToPlayer }));
         
         if (e.hp <= 0 || p.hp <= 0) break;
         turn++;
     }
 
-    if (turn > 100) {
-        roundLogs.push(t('LOGS', 'BATTLE_INFINITE_LOOP'));
+    if (turn > MAX_TURNS) {
+        roundLogs.push(t(I18N_KEY.LOGS.BATTLE_INFINITE_LOOP));
     }
 
     state.player.hp = Math.max(0, p.hp);
     
     if (state.player.hp <= 0) {
-        roundLogs.push(t('LOGS', 'GAME_OVER', { enemy: e.name }));
+        roundLogs.push(t(I18N_KEY.LOGS.GAME_OVER, { enemy: e.name }));
     } else {
         if (state.map.selectedNode && state.map.selectedNode.type === GAME_CONFIG.NODE_TYPES.BOSS) {
-            roundLogs.push(t('LOGS', 'VICTORY_FINAL', { enemy: e.name }));
+            roundLogs.push(t(I18N_KEY.LOGS.VICTORY_FINAL, { enemy: e.name }));
         } else {
-            roundLogs.push(t('LOGS', 'VICTORY_NORMAL', { enemy: e.name }));
+            roundLogs.push(t(I18N_KEY.LOGS.VICTORY_NORMAL, { enemy: e.name }));
         }
         state.map.lastCompletedNode = state.map.selectedNode; 
         state.map.currentFloor += 1; 

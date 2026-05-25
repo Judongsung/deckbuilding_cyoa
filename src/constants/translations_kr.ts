@@ -1,23 +1,32 @@
-// src/constants/translations_kr.js
+// src/constants/translations_kr.ts
 
 export const TRANSLATIONS = {
     NODE_TYPES: {
-        "normal": "일반 전투",
-        "elite": "엘리트 전투",
-        "boss": "보스 전투",
-        "shop": "상점",
-        "rest": "휴식처",
-        "treasure": "보물 상자",
-        "unknown": "미지"
+        "NORMAL": "일반 전투",
+        "ELITE": "엘리트 전투",
+        "BOSS": "보스 전투",
+        "SHOP": "상점",
+        "REST": "휴식처",
+        "TREASURE": "보물 상자",
+        "UNKNOWN": "미지"
     },
     STAT_NAMES: {
         attack: "기초 공격력",
+        ATTACK: "기초 공격력",
         attackGrowth: "공격 성장력",
+        ATTACK_GROWTH: "공격 성장력",
         attackCap: "최대 공격력",
+        ATTACK_CAP: "최대 공격력",
         defense: "기초 방어력",
+        DEFENSE: "기초 방어력",
         defenseGrowth: "방어 성장력",
+        DEFENSE_GROWTH: "방어 성장력",
         defenseCap: "최대 방어력",
-        deployment: "전개력"
+        DEFENSE_CAP: "최대 방어력",
+        deployment: "전개력",
+        DEPLOYMENT: "전개력",
+        hp: "체력",
+        HP: "체력"
     },
     
     KEYWORDS: {
@@ -34,10 +43,10 @@ export const TRANSLATIONS = {
     },
 
     CARD_TIERS: {
-        "basic": "기본",
-        "common": "일반",
-        "special": "특별",
-        "rare": "희귀"
+        "BASIC": "기본",
+        "COMMON": "일반",
+        "SPECIAL": "특별",
+        "RARE": "희귀"
     },
     
     UI: {
@@ -134,7 +143,12 @@ export const TRANSLATIONS = {
         ALERT_DISCONNECTED: "이전 노드와 연결되지 않은 경로입니다!",
         
         TREASURE_TITLE: "💎 보물 상자",
-        BTN_CLAIM: "획득하기"
+        BTN_CLAIM: "획득하기",
+        BATTLE_ENEMY_HP: "❤️ 체력: {hp} / {maxHp}",
+        BATTLE_ENEMY_ATTACK: "⚔️ 공격력: {attack}",
+        BATTLE_ENEMY_DEFENSE: "🛡️ 방어력: {defense}",
+        BATTLE_RESULT: "전투 결과",
+        DECK_SYNERGY: "💡 현재 덱 시너지:"
     },
 
     SCENE: {
@@ -180,7 +194,6 @@ export const TRANSLATIONS = {
         VICTORY_FINAL: "🎉 축하합니다! [{enemy}]를 박살내며 이번 던전을 정복했습니다! 최종 승리!",
         GAME_OVER: "💀 [{enemy}]에게 압도당해 패배했습니다...",
         
-        REST_HEAL: "⛺ 모닥불에서 휴식하며 체력을 {amount} 회복했습니다.",
         REST_UPGRADE: "🔨 모닥불에서 [{card}] 카드를 강화했습니다!",
         
         POTION_USE: "🧪 [{potion}]을(를) 마셨습니다! ({desc})",
@@ -196,7 +209,10 @@ export const TRANSLATIONS = {
         EVENT_GET_RELIC_GOLD: "💎 적선의 대가로 [{relic}] 유물을 받았습니다!",
         EVENT_GET_GOLD: "💰 {gold} 골드를 획득했습니다!",
         EVENT_HEAL: "🌿 체력을 {amount} 회복했습니다!",
-        EVENT_LEAVE: "무사히 그곳을 빠져나왔습니다."
+        EVENT_LEAVE: "무사히 그곳을 빠져나왔습니다.",
+
+        RELIC_EFFECT_HEAL: "🏺 [{relic}] 효과 발동! 체력을 {value} 회복했습니다.",
+        RELIC_EFFECT_GOLD: "🏺 [{relic}] 효과 발동! 추가 골드 {value} 획득."
     },
 
     DATA: {
@@ -274,4 +290,4 @@ export const TRANSLATIONS = {
             }
         }
     }
-};
+} as const;

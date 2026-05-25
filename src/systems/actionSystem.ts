@@ -7,11 +7,14 @@
 import { GAME_CONFIG } from '../constants/gameConfig.js';
 import { recalculatePlayerStats } from './statSystem.js';
 import { t } from '../utils/i18n.js';
+import { I18N_KEY } from '../constants/translation_keys.js';
+import type { GameState } from '../types/state.js';
+import type { EventChoice } from '../types/models.js';
 
-export function executeRestHeal(state) {
+export function executeRestHeal(state: GameState): GameState {
     const { PLAYER, EVENT } = GAME_CONFIG;
     state.player.hp = Math.min(PLAYER.MAX_HP, state.player.hp + EVENT.REST_HEAL_AMOUNT);
-    state.battleLogs = [...state.battleLogs, t('LOGS', 'REST_HEAL', { amount: EVENT.REST_HEAL_AMOUNT })];
+    state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.REST_HEAL, { amount: EVENT.REST_HEAL_AMOUNT })];
     
     state.map.lastCompletedNode = state.map.selectedNode; 
     state.map.currentFloor += 1;
@@ -22,10 +25,10 @@ export function executeRestHeal(state) {
     return state;
 }
 
-export function executeRestUpgrade(state, index) {
+export function executeRestUpgrade(state: GameState, index: number): GameState {
     let card = state.deck[index];
     card.isUpgraded = true;
-    state.battleLogs = [...state.battleLogs, t('LOGS', 'REST_UPGRADE', { card: card.name })];
+    state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.REST_UPGRADE, { card: card.name })];
     
     state.map.lastCompletedNode = state.map.selectedNode; 
     state.map.currentFloor += 1;
@@ -36,21 +39,21 @@ export function executeRestUpgrade(state, index) {
     return recalculatePlayerStats(state);
 }
 
-export function executeEventChoice(state, choice) {
+export function executeEventChoice(state: GameState, choice: EventChoice): GameState {
     const { RUN_STATUS, ACTIONS } = GAME_CONFIG;
     
-    state.battleLogs = [...state.battleLogs, t('LOGS', 'EVENT_CHOICE', { choice: choice.text })];
+    state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.EVENT_CHOICE, { choice: choice.text })];
 
     if (choice.actions) {
         for (const action of choice.actions) {
             if (action.type === ACTIONS.LEAVE) {
-                state.battleLogs = [...state.battleLogs, t('LOGS', 'EVENT_LEAVE')];
+                state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.EVENT_LEAVE)];
             } 
             else if (action.type === ACTIONS.LOSE_HP) {
                 state.player.hp -= action.value;
-                state.battleLogs = [...state.battleLogs, t('LOGS', 'EVENT_LOSE_HP', { damage: action.value })];
+                state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.EVENT_LOSE_HP, { damage: action.value })];
                 if (state.player.hp <= 0) {
-                    state.battleLogs = [...state.battleLogs, t('LOGS', 'EVENT_DEATH')];
+                    state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.EVENT_DEATH)];
                     state.runStatus = RUN_STATUS.GAMEOVER;
                     break;
                 }
@@ -58,26 +61,26 @@ export function executeEventChoice(state, choice) {
             else if (action.type === ACTIONS.LOSE_GOLD) {
                 if (state.player.gold >= action.value) {
                     state.player.gold -= action.value;
-                    state.battleLogs = [...state.battleLogs, t('LOGS', 'EVENT_LOSE_GOLD', { gold: action.value })];
+                    state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.EVENT_LOSE_GOLD, { gold: action.value })];
                 } else {
-                    alert("골드가 부족합니다!");
+                    alert(t(I18N_KEY.UI.ALERT_NO_GOLD));
                     return state; 
                 }
             }
             else if (action.type === ACTIONS.GET_GOLD) {
                 state.player.gold += action.value;
-                state.battleLogs = [...state.battleLogs, t('LOGS', 'EVENT_GET_GOLD', { gold: action.value })];
+                state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.EVENT_GET_GOLD, { gold: action.value })];
             }
             else if (action.type === ACTIONS.HEAL) {
                 state.player.hp = Math.min(GAME_CONFIG.PLAYER.MAX_HP, state.player.hp + action.value);
-                state.battleLogs = [...state.battleLogs, t('LOGS', 'EVENT_HEAL', { amount: action.value })];
+                state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.EVENT_HEAL, { amount: action.value })];
             }
             else if (action.type === ACTIONS.GET_RELIC) {
                 let availableRelics = state.relicLibrary.filter(r => !state.player.relics.some(pr => pr.id === r.id));
                 if (availableRelics.length > 0) {
                     let randomRelic = availableRelics[Math.floor(Math.random() * availableRelics.length)];
                     state.player.relics.push(randomRelic);
-                    state.battleLogs = [...state.battleLogs, t('LOGS', 'EVENT_GET_RELIC', { relic: randomRelic.name })];
+                    state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.EVENT_GET_RELIC, { relic: randomRelic.name })];
                     state = recalculatePlayerStats(state);
                 }
             }

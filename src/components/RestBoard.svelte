@@ -1,7 +1,8 @@
-<script>
-    import { gameStore } from '../stores/gameStore.js';
-    import { GAME_CONFIG } from '../constants/gameConfig.js';
-    import { TRANSLATIONS, t } from '../utils/i18n.js';
+<script lang="ts">
+    import { gameStore } from '../stores/gameStore.ts';
+    import { GAME_CONFIG } from '../constants/gameConfig.ts';
+    import { TRANSLATIONS, t } from '../utils/i18n.ts';
+    import { I18N_KEY } from '../constants/translation_keys.ts';
     import CardItem from './CardItem.svelte';
 
     let isUpgradeMode = false; // 제련 모드 켜짐 여부
@@ -32,7 +33,7 @@
                     <span class="btn-icon">❤️</span>
                     <div class="btn-text">
                         <strong>{TRANSLATIONS.UI.REST_HEAL_TITLE}</strong>
-                        <span>{t('UI', 'REST_HEAL_DESC', { amount: GAME_CONFIG.EVENT.REST_HEAL_AMOUNT })}</span>
+                        <span>{t(I18N_KEY.UI.REST_HEAL_DESC, { amount: GAME_CONFIG.EVENT.REST_HEAL_AMOUNT })}</span>
                     </div>
                 </button>
 

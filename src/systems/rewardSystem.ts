@@ -7,9 +7,12 @@
  */
 import { GAME_CONFIG } from '../constants/gameConfig.js';
 import { t } from '../utils/i18n.js';
+import { I18N_KEY } from '../constants/translation_keys.js';
 import { recalculatePlayerStats } from './statSystem.js';
+import type { GameState } from '../types/state.js';
+import type { Card } from '../types/models.js';
 
-export function generateBattleRewards(state, earnedGold) {
+export function generateBattleRewards(state: GameState, earnedGold: number): GameState {
     const { ECONOMY, NODE_TYPES, EVENT } = GAME_CONFIG;
     
     let pendingRewards = [];
@@ -42,39 +45,39 @@ export function generateBattleRewards(state, earnedGold) {
     return state;
 }
 
-export function claimSpecificReward(state, index) {
+export function claimSpecificReward(state: GameState, index: number): GameState {
     const reward = state.pendingRewards[index];
     if (!reward) return state;
 
     if (reward.type === GAME_CONFIG.REWARD_TYPES.GOLD) {
         state.player.gold += reward.amount;
-        let enemyName = t('NODE_TYPES', state.map.lastCompletedNode?.type || 'unknown');
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'REWARD_GOLD', { enemy: enemyName, gold: reward.amount })];
+        let enemyName = t(state.map.lastCompletedNode?.type || I18N_KEY.NODE_TYPES.UNKNOWN);
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.REWARD_GOLD, { enemy: enemyName, gold: reward.amount })];
     } else if (reward.type === GAME_CONFIG.REWARD_TYPES.POTION) {
         if (state.player.potions.length >= 3) {
-            alert(t('UI', 'ALERT_POTION_FULL'));
+            alert(t(I18N_KEY.UI.ALERT_POTION_FULL));
             return state;
         }
         state.player.potions.push(reward.item);
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'REWARD_POTION', { potion: reward.item.name })];
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.REWARD_POTION, { potion: reward.item.name })];
     } else if (reward.type === GAME_CONFIG.REWARD_TYPES.RELIC) {
         state.player.relics.push(reward.item);
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'REWARD_RELIC', { relic: reward.item.name })];
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.REWARD_RELIC, { relic: reward.item.name })];
     }
     
     state.pendingRewards.splice(index, 1);
     return state;
 }
 
-export function claimReward(state, card) { 
+export function claimReward(state: GameState, card: Card | null): GameState { 
     if (card) { 
         let newCard = JSON.parse(JSON.stringify(card)); 
         newCard.isUpgraded = false; 
         state.deck = [...state.deck, newCard]; 
         state = recalculatePlayerStats(state); 
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'REWARD_CARD', { card: card.name })]; 
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.REWARD_CARD, { card: card.name })]; 
     } else { 
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'REWARD_SKIP')]; 
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.REWARD_SKIP)]; 
     }
     
     const cardRewardIndex = state.pendingRewards.findIndex(r => r.type === GAME_CONFIG.REWARD_TYPES.CARD);
@@ -85,7 +88,7 @@ export function claimReward(state, card) {
     return state;
 }
 
-export function skipAllRewards(state) {
+export function skipAllRewards(state: GameState): GameState {
     state.pendingRewards = [];
     state.isRewardScreenOpen = false;
     state.runStatus = GAME_CONFIG.RUN_STATUS.MAP_NAVIGATING;

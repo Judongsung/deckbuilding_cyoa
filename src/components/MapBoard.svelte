@@ -1,7 +1,8 @@
-<script>
-    import { gameStore } from '../stores/gameStore.js';
-    import { GAME_CONFIG } from '../constants/gameConfig.js';
-    import { TRANSLATIONS, t } from '../utils/i18n.js';
+<script lang="ts">
+    import { gameStore } from '../stores/gameStore.ts';
+    import { GAME_CONFIG } from '../constants/gameConfig.ts';
+    import { TRANSLATIONS, t } from '../utils/i18n.ts';
+    import { I18N_KEY } from '../constants/translation_keys.ts';
     import { onMount, tick } from 'svelte';
 
     const nodeIcons = {
@@ -56,15 +57,11 @@
                             let isPassed = false;
                             
                             if ($gameStore.map.history) {
-                                if (node.floor === 1) {
-                                    // 1층 노드가 역사에 있다면, 1층->2층 연결선도 targetId가 역사에 있으면 Passed
-                                    isPassed = $gameStore.map.history.includes(node.id) && $gameStore.map.history.includes(targetId);
-                                } else {
-                                    isPassed = $gameStore.map.history.includes(node.id) && $gameStore.map.history.includes(targetId);
-                                }
+                                isPassed = $gameStore.map.history.includes(node.id) && $gameStore.map.history.includes(targetId);
                             }
 
-                            if (!$gameStore.map.lastCompletedNode && node.floor === 1 && $gameStore.map.currentFloor === 1) {
+                            // 1층 도달 가능 선별 (새 게임 시작 시 currentFloor === 0)
+                            if (!$gameStore.map.lastCompletedNode && node.floor === 1 && $gameStore.map.currentFloor === 0) {
                                 isActive = true;
                             } else if ($gameStore.map.lastCompletedNode && $gameStore.map.lastCompletedNode.id === node.id) {
                                 isActive = true;
@@ -101,10 +98,14 @@
     function getNodeAt(floorNodes, index) {
         return floorNodes.find(n => n.index === index);
     }
+
+    function handleNodeClick(node) {
+        gameStore.selectNode(node);
+    }
 </script>
 
 <div class="map-board">
-    <h2>{t('UI', 'TITLE_MAP', { floor: $gameStore.map.currentFloor })}</h2>
+    <h2>{t(I18N_KEY.UI.TITLE_MAP, { floor: $gameStore.map.currentFloor })}</h2>
 
     <div class="map-grid-container" bind:this={mapGrid} bind:clientWidth={mapGridWidth} bind:clientHeight={mapGridHeight}>
         <svg class="lines-svg">
@@ -130,11 +131,12 @@
                                 id="node-btn-{node.id}"
                                 style="--offset-x: {node.offsetX || 0}px; --offset-y: {node.offsetY || 0}px;"
                                 class="node-btn {node.type.toLowerCase()} 
-                                    { $gameStore.map.lastCompletedNode && $gameStore.map.lastCompletedNode.connections.includes(node.index) && node.floor === $gameStore.map.currentFloor ? 'reachable' : '' }
-                                    { (!$gameStore.map.lastCompletedNode && node.floor === 1 && $gameStore.map.currentFloor === 1) ? 'reachable' : '' }
-                                    { $gameStore.map.selectedNode && $gameStore.map.selectedNode.id === node.id ? 'selected' : '' }"
-                                disabled={node.floor !== $gameStore.map.currentFloor || $gameStore.runStatus === GAME_CONFIG.RUN_STATUS.IN_NODE_ACTION}
-                                on:click={() => gameStore.selectNode(node)}
+                                    { $gameStore.map.selectedNode && $gameStore.map.selectedNode.id === node.id ? 'selected' : '' }
+                                    { $gameStore.map.history.includes(node.id) ? 'passed' : '' }
+                                    { $gameStore.map.lastCompletedNode && $gameStore.map.lastCompletedNode.connections.includes(node.index) && node.floor === $gameStore.map.currentFloor + 1 ? 'reachable' : '' }
+                                    { (!$gameStore.map.lastCompletedNode && node.floor === 1 && $gameStore.map.currentFloor === 0) ? 'reachable' : '' }"
+                                disabled={node.floor !== $gameStore.map.currentFloor + 1 || $gameStore.runStatus === GAME_CONFIG.RUN_STATUS.IN_NODE_ACTION}
+                                on:click={() => handleNodeClick(node)}
                             >
                                 <span class="icon">{nodeIcons[node.type] || '▪️'}</span>
                                 <span class="type-name">{TRANSLATIONS.NODE_TYPES[node.type]}</span>

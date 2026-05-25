@@ -8,12 +8,14 @@
 
 import { GAME_CONFIG } from '../constants/gameConfig.js';
 import { CardEffectHandlers, evaluateCondition } from './effectHandlers.js';
+import type { GameState } from '../types/state.js';
 
 const { TRIGGERS, ACTIONS } = GAME_CONFIG;
 
-export function initPlayerStats(state) {
+export function initPlayerStats(state: GameState): GameState {
     state.player = { 
         ...state.basePlayerParams, 
+        maxHp: state.basePlayerParams.hp,
         deckSize: 0, 
         relics: [], 
         potions: [] 
@@ -22,7 +24,7 @@ export function initPlayerStats(state) {
     return state;
 }
 
-export function recalculatePlayerStats(state) {
+export function recalculatePlayerStats(state: GameState): GameState {
     let p = { ...state.basePlayerParams };
     
     state.deck = state.deck.map(c => ({ 
@@ -31,13 +33,13 @@ export function recalculatePlayerStats(state) {
     }));
     
     state.deck.forEach(c => {
-        let s = (c.isUpgraded && c.upgraded_base_stats) ? c.upgraded_base_stats : c.base_stats;
+        let s = (c.isUpgraded && c.upgradedBaseStats) ? c.upgradedBaseStats : c.baseStats;
         
-        p.baseAttack += (s.attack || 0); 
+        p.attack += (s.attack || 0); 
         p.attackCap += (s.attackCap || 0); 
         p.attackGrowth += (s.attackGrowth || 0);
         
-        p.baseDefense += (s.defense || 0); 
+        p.defense += (s.defense || 0); 
         p.defenseCap += (s.defenseCap || 0); 
         p.defenseGrowth += (s.defenseGrowth || 0); 
         
@@ -54,7 +56,7 @@ export function recalculatePlayerStats(state) {
 
     let allEffects = [];
     state.deck.forEach(card => {
-        let activeEffects = (card.isUpgraded && card.upgraded_effects) ? card.upgraded_effects : card.effects;
+        let activeEffects = (card.isUpgraded && card.upgradedEffects) ? card.upgradedEffects : card.effects;
         if (activeEffects) {
             activeEffects.forEach(effect => {
                 const handler = CardEffectHandlers[effect.action];
@@ -77,13 +79,14 @@ export function recalculatePlayerStats(state) {
         p = result.p;
     });
 
-    const attackDiff = p.baseAttack - state.basePlayerParams.baseAttack;
-    const defenseDiff = p.baseDefense - state.basePlayerParams.baseDefense;
+    const attackDiff = p.attack - state.basePlayerParams.attack;
+    const defenseDiff = p.defense - state.basePlayerParams.defense;
     p.attackCap += attackDiff;
     p.defenseCap += defenseDiff;
 
     p.deckSize = state.deck.length; 
     p.hp = state.player.hp; 
+    p.maxHp = state.player.maxHp;
     p.gold = state.player.gold; 
     p.relics = state.player.relics;
     p.potions = state.player.potions || [];
@@ -92,13 +95,4 @@ export function recalculatePlayerStats(state) {
     return state;
 }
 
-export function mapStatTypeToKey(type) {
-    const mapping = { 
-        "attack": "baseAttack", "attackCap": "attackCap", 
-        "attackGrowth": "attackGrowth", 
-        "defense": "baseDefense", "defenseCap": "defenseCap", 
-        "defenseGrowth": "defenseGrowth", 
-        "deployment": "deployment" 
-    };
-    return mapping[type] || null;
-}
+

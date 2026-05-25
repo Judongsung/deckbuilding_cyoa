@@ -7,9 +7,11 @@
  */
 import { GAME_CONFIG } from '../constants/gameConfig.js';
 import { t } from '../utils/i18n.js';
+import { I18N_KEY } from '../constants/translation_keys.js';
+import type { GameState } from '../types/state.js';
 
-export function openTreasure(state) {
-    state.battleLogs = [...state.battleLogs, t('LOGS', 'NODE_TREASURE')];
+export function openTreasure(state: GameState): GameState {
+    state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.NODE_TREASURE)];
     let availableRelics = state.relicLibrary.filter(r => !state.player.relics.some(pr => pr.id === r.id));
     
     if (availableRelics.length > 0) {
@@ -23,12 +25,12 @@ export function openTreasure(state) {
     return state;
 }
 
-export function claimTreasure(state) {
+export function claimTreasure(state: GameState): GameState {
     if (state.treasureContent && state.treasureContent.relic) {
         state.player.relics.push(state.treasureContent.relic);
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'NODE_TREASURE_RELIC', { relic: state.treasureContent.relic.name })];
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.NODE_TREASURE_RELIC, { relic: state.treasureContent.relic.name })];
     } else {
-        state.battleLogs = [...state.battleLogs, t('LOGS', 'NODE_TREASURE_EMPTY')];
+        state.battleLogs = [...state.battleLogs, t(I18N_KEY.LOGS.NODE_TREASURE_EMPTY)];
     }
     state.map.lastCompletedNode = state.map.selectedNode;
     state.map.currentFloor += 1;
