@@ -2,7 +2,6 @@
 
 export const GAME_CONFIG = {
     // 0. 다국어 설정
-    LANGUAGE: 'kr',
     DEFAULT_LANGUAGE: 'kr',
     LANG_STORAGE_KEY: 'deck_rpg_language',
     SUPPORTED_LANGUAGES: [
