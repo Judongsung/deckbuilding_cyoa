@@ -148,7 +148,15 @@ export const TRANSLATIONS = {
         BATTLE_ENEMY_ATTACK: "⚔️ 공격력: {attack}",
         BATTLE_ENEMY_DEFENSE: "🛡️ 방어력: {defense}",
         BATTLE_RESULT: "전투 결과",
-        DECK_SYNERGY: "💡 현재 덱 시너지:"
+        DECK_SYNERGY: "💡 현재 덱 시너지:",
+        // 설정 팝업
+        BTN_SETTINGS: "⚙️ 설정",
+        SETTINGS_TITLE: "⚙️ 설정",
+        SETTINGS_LANGUAGE: "언어",
+        SETTINGS_LANG_KR: "한국어",
+        SETTINGS_LANG_EN: "English",
+        SETTINGS_APPLY: "적용 및 재시작",
+        SETTINGS_RELOAD_NOTICE: "언어 변경 시 게임이 새로 시작됩니다."
     },
 
     SCENE: {

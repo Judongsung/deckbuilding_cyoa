@@ -4,7 +4,9 @@ import { GAME_CONFIG } from '../constants/gameConfig.js';
 let translationsCache = null;
 
 export async function initLanguage() {
-    let lang = GAME_CONFIG.LANGUAGE;
+    // localStorage에 저장된 언어가 있으면 우선 적용
+    const savedLang = localStorage.getItem('deck_rpg_language');
+    let lang = savedLang || GAME_CONFIG.LANGUAGE;
     try {
         const module = await import(`../constants/translations_${lang}.ts`);
         translationsCache = module.TRANSLATIONS;

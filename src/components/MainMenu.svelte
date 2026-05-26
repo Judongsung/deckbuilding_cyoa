@@ -4,6 +4,7 @@
     import { GAME_CONFIG } from '../constants/gameConfig.ts'; 
     import { t } from '../utils/i18n.ts';
     import { I18N_KEY } from '../constants/translation_keys.ts';
+    import OptionPopup from './OptionPopup.svelte';
 
     const dispatch = createEventDispatcher();
 
@@ -12,6 +13,7 @@
     $: characters = $gameStore.characterLibrary || [];
 
     let showCharacterSelect = false;
+    let showSettings = false;
 
     function handleNewGameClick() {
         if (hasSave) {
@@ -68,7 +70,16 @@
     <div class="footer">
         <p>{t(I18N_KEY.UI.VERSION)}</p>
     </div>
+
+    <!-- 설정 버튼 -->
+    <button class="settings-btn" on:click={() => showSettings = true} aria-label="Settings">
+        {t(I18N_KEY.UI.BTN_SETTINGS)}
+    </button>
 </div>
+
+{#if showSettings}
+    <OptionPopup on:close={() => showSettings = false} />
+{/if}
 
 <style>
     /* 화면 전체를 덮는 다크 판타지 느낌의 배경 */
@@ -115,4 +126,24 @@
     .char-btn:hover { border-color: #3498db; transform: translateY(-5px); box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3); }
 
     .footer { position: absolute; bottom: 20px; color: #7f8c8d; font-size: 14px; }
+
+    .settings-btn {
+        position: absolute;
+        top: 24px;
+        right: 28px;
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        color: #95a5a6;
+        font-size: 14px;
+        padding: 8px 16px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        letter-spacing: 0.5px;
+    }
+    .settings-btn:hover {
+        color: #f1c40f;
+        border-color: rgba(241, 196, 15, 0.4);
+        background: rgba(241, 196, 15, 0.06);
+    }
 </style>

@@ -12,6 +12,7 @@ import { buyCardFromShop, buyRelicFromShop, buyPotionFromShop, removeCardInShop,
 import { usePotion } from '../systems/potionSystem.js';
 import { claimSpecificReward, skipAllRewards, claimReward, generateBattleRewards } from '../systems/rewardSystem.js';
 import { claimTreasure } from '../systems/treasureSystem.js';
+import { setLanguage, getCurrentLanguage } from '../systems/optionSystem.js';
 
 import type { GameState } from '../types/state.ts';
 
@@ -198,7 +199,11 @@ function createGameEngine() {
         returnToMainMenu: () => update(state => {
             state.runStatus = GAME_CONFIG.RUN_STATUS.NOT_STARTED;
             return state;
-        })
+        }),
+
+        // 설정
+        setLanguage: (lang: string) => setLanguage(lang as any),
+        getCurrentLanguage: () => getCurrentLanguage(),
     };
 }
 
